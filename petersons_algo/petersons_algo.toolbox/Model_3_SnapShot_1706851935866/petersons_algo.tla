@@ -209,8 +209,6 @@ J15 == pc1 # 5
 J16 == pc1 # 6
 J17 == pc1 # 7
 
-\* the below justice conditions are to ensure that the scheduler is fair
-
 J ==
 /\ J00
 /\ J02
@@ -235,5 +233,5 @@ J ==
 
 =============================================================================
 \* Modification History
-\* Last modified Fri Feb 02 11:35:23 IST 2024 by neerajkrishnan
+\* Last modified Wed Jan 31 11:48:06 IST 2024 by neerajkrishnan
 \* Created Tue Jan 30 17:52:27 IST 2024 by neerajkrishnan

@@ -939,304 +939,90 @@
 \begin{document}
 \tlatex
 \setboolean{shading}{true}
-\@x{}\moduleLeftDash\@xx{ {\MODULE} petersons\_algo}\moduleRightDash\@xx{}%
-\@pvspace{8.0pt}%
-\@x{ {\EXTENDS} Integers}%
-\@pvspace{8.0pt}%
-\@x{ {\VARIABLES} pc0 ,\, pc1 ,\, turn ,\, intr0 ,\, intr1}%
-\@pvspace{8.0pt}%
-\@x{ TypeOK \.{\defeq}}%
-\@x{ \.{\land} pc0 \.{\in} 0 \.{\dotdot} 7}%
-\@x{ \.{\land} pc1 \.{\in} 0 \.{\dotdot} 7}%
-\@x{ \.{\land} turn \.{\in} \{ 0 ,\, 1 \}}%
-\@x{ \.{\land} intr0 \.{\in} \{ {\TRUE} ,\, {\FALSE} \}}%
-\@x{ \.{\land} intr1 \.{\in} \{ {\TRUE} ,\, {\FALSE} \}}%
+\@x{}\moduleLeftDash\@xx{ {\MODULE} sema}\moduleRightDash\@xx{}%
 \@pvspace{16.0pt}%
 \begin{lcom}{0}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-asynchronous system
+\ensuremath{sema} - available initially
 \end{cpar}%
 \vshade{5.0}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-for \ensuremath{i \.{=} 0}, 1
+for process 1 and 2
 \end{cpar}%
 \vshade{5.0}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-the algorithm is
-\end{cpar}%
-\vshade{5.0}%
-\begin{cpar}{0}{F}{F}{0}{0}{}%
-0 : \ensuremath{while(True)\{
+0 : \ensuremath{while(true)\{
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{1 \.{:}\@s{12.5}\.{\slsl} non} \ensuremath{critical}
- \ensuremath{section
+\ensuremath{1 \.{:}\@s{12.5}\.{\slsl} Non\.{-}critical} \ensuremath{section
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{2 \.{:}\@s{12.5}intr[i] \.{=} True
+\ensuremath{2 \.{:}\@s{12.5}Request(sema)
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{3 \.{:}\@s{12.5}turn \.{=} 1 \.{-} i
+\ensuremath{3 \.{:}\@s{12.5}\.{\slsl} Critical} \ensuremath{section
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{4 \.{:}\@s{12.5}while(turn \.{\defeq} 1} \ensuremath{and}
- \ensuremath{intr[1 \.{-} i] \.{\defeq} 1) \.{\slsl} wait
+\ensuremath{4 \.{:}\@s{12.5}Release(sema)
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{5 \.{:}\@s{12.5}\.{\slsl} critical} \ensuremath{section
-}%
-\end{cpar}%
-\begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{6 \.{:}\@s{12.5}intr[i] \.{=} 0
-}%
-\end{cpar}%
-\begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{7 \.{:} \}
+\ensuremath{5 \.{:} \}
 }%
 \end{cpar}%
 \vshade{5.0}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{5\.{\ct}i \.{=} 5
+\ensuremath{Request(sema)\{
+}%
+\end{cpar}%
+\begin{cpar}{0}{T}{F}{10.0}{0}{}%
+\ensuremath{while(True)\{
+}%
+\end{cpar}%
+\begin{cpar}{0}{T}{F}{10.0}{0}{}%
+\ensuremath{if(sema \.{\defeq} available)\{
+}%
+\end{cpar}%
+\begin{cpar}{0}{T}{F}{10.0}{0}{}%
+\ensuremath{sema \.{=} busy;
+}%
+\end{cpar}%
+\begin{cpar}{0}{F}{F}{0}{0}{}%
+\ensuremath{break;
+}%
+\end{cpar}%
+\begin{cpar}{1}{F}{F}{0}{0}{}%
+\ensuremath{\}
+}%
+\end{cpar}%
+\begin{cpar}{1}{F}{F}{0}{0}{}%
+\ensuremath{\}
+}%
+\end{cpar}%
+\vshade{5.0}%
+\begin{cpar}{1}{F}{F}{0}{0}{}%
+ \ensuremath{\.{\slsl} if} \ensuremath{statement} \ensuremath{till}
+ \ensuremath{break} \ensuremath{is} \ensuremath{atomic
+}%
+\end{cpar}%
+\vshade{5.0}%
+\begin{cpar}{0}{F}{F}{0}{0}{}%
+\ensuremath{Release(sema)\{
+}%
+\end{cpar}%
+\begin{cpar}{0}{T}{F}{10.0}{0}{}%
+\ensuremath{sema \.{=} available
+}%
+\end{cpar}%
+\begin{cpar}{1}{F}{F}{0}{0}{}%
+\ensuremath{\}
 }%
 \end{cpar}%
 \end{lcom}%
-\@x{ Init0 \.{\defeq}}%
-\@x{ \.{\land} turn \.{=} 0}%
-\@x{ \.{\land} intr0 \.{=} {\FALSE}}%
-\@x{ \.{\land} pc0 \.{=} 0}%
-\@pvspace{8.0pt}%
-\@x{ Init1 \.{\defeq}}%
-\@x{ \.{\land} turn \.{=} 0}%
-\@x{ \.{\land} intr1 \.{=} {\FALSE}}%
-\@x{ \.{\land} pc1 \.{=} 0}%
-\@pvspace{8.0pt}%
-\@x{ Init \.{\defeq} Init0 \.{\land} Init1}%
-\@pvspace{8.0pt}%
-\@x{ L01 \.{\defeq}}%
-\@x{ \.{\land} pc0 \.{=} 0}%
-\@x{ \.{\land} pc0 \.{'} \.{=} 1}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} turn ,\, intr0 ,\, intr1 {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ L12 \.{\defeq}}%
-\@x{ \.{\land} pc0 \.{=} 1}%
-\@x{ \.{\land} pc0 \.{'} \.{=} 2}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} turn ,\, intr0 ,\, intr1 {\rangle}}%
-\@pvspace{16.0pt}%
-\@x{ L23 \.{\defeq}}%
-\@x{ \.{\land} pc0 \.{=} 2}%
-\@x{ \.{\land} pc0 \.{'} \.{=} 3}%
-\@x{ \.{\land} intr0 \.{=} {\TRUE}}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} intr1 ,\, turn {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ L34 \.{\defeq}}%
-\@x{ \.{\land} pc0 \.{=} 3}%
-\@x{ \.{\land} pc0 \.{'} \.{=} 4}%
-\@x{ \.{\land} turn \.{'} \.{=} 1}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} intr0 ,\, intr1 {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ L44 \.{\defeq}}%
-\@x{ \.{\land} pc0 \.{=} 4}%
-\@x{ \.{\land} pc0 \.{'}\@s{1.72} \.{=} 4}%
-\@x{ \.{\land} turn \.{=} 1}%
-\@x{ \.{\land} turn \.{'} \.{=} 1}%
-\@x{ \.{\land} intr1 \.{'} \.{=} {\TRUE}}%
-\@x{ \.{\land} {\UNCHANGED} intr0}%
-\@pvspace{8.0pt}%
-\@x{ L45 \.{\defeq}}%
-\@x{ \.{\land} pc0 \.{=} 4}%
-\@x{ \.{\land} pc0 \.{'} \.{=} 5}%
-\@x{ \.{\land} ( turn \.{=} 0 \.{\lor} intr1 \.{=} {\FALSE} )}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} turn ,\, intr0 ,\, intr1 {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ L56 \.{\defeq}}%
-\@x{ \.{\land} pc0 \.{=} 5}%
-\@x{ \.{\land} pc0 \.{'} \.{=} 6}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} intr0 ,\, intr1 ,\, turn {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ L67 \.{\defeq}}%
-\@x{ \.{\land} pc0 \.{=} 6}%
-\@x{ \.{\land} pc0 \.{'} \.{=} 7}%
-\@x{ \.{\land} intr0 \.{'} \.{=} 0}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} intr1 ,\, turn {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ L70 \.{\defeq}}%
-\@x{ \.{\land} pc0 \.{=} 7}%
-\@x{ \.{\land} pc0 \.{'} \.{=} 0}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} turn ,\, intr0 ,\, intr1 {\rangle}}%
-\@pvspace{8.0pt}%
- \@x{ SLOGP \.{\defeq} {\UNCHANGED} {\langle} pc0 ,\, intr0 ,\, intr1 ,\, turn
- {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{}%
-\@y{\@s{0}%
- for the second system
-}%
-\@xx{}%
-\@pvspace{8.0pt}%
-\@x{ M01 \.{\defeq}}%
-\@x{ \.{\land} pc1 \.{=} 0}%
-\@x{ \.{\land} pc1 \.{'} \.{=} 1}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} turn ,\, intr0 ,\, intr1 {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ M12 \.{\defeq}}%
-\@x{ \.{\land} pc1 \.{=} 1}%
-\@x{ \.{\land} pc1 \.{'} \.{=} 2}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} turn ,\, intr0 ,\, intr1 {\rangle}}%
-\@pvspace{16.0pt}%
-\@x{ M23 \.{\defeq}}%
-\@x{ \.{\land} pc1 \.{=} 2}%
-\@x{ \.{\land} pc1 \.{'} \.{=} 3}%
-\@x{ \.{\land} intr1 \.{=} {\TRUE}}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} intr0 ,\, turn {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ M34 \.{\defeq}}%
-\@x{ \.{\land} pc1 \.{=} 3}%
-\@x{ \.{\land} pc1 \.{'} \.{=} 4}%
-\@x{ \.{\land} turn \.{'} \.{=} 0}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} intr0 ,\, intr1 {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ M44 \.{\defeq}}%
-\@x{ \.{\land} pc1 \.{=} 4}%
-\@x{ \.{\land} pc1 \.{'}\@s{1.72} \.{=} 4}%
-\@x{ \.{\land} turn \.{=} 0}%
-\@x{ \.{\land} turn \.{'} \.{=} 0}%
-\@x{ \.{\land} intr0 \.{'} \.{=} {\TRUE}}%
-\@x{ \.{\land} {\UNCHANGED} intr1}%
-\@pvspace{8.0pt}%
-\@x{ M45 \.{\defeq}}%
-\@x{ \.{\land} pc1 \.{=} 4}%
-\@x{ \.{\land} pc1 \.{'} \.{=} 5}%
-\@x{ \.{\land} ( turn \.{=} 1 \.{\lor} intr0 \.{=} {\FALSE} )}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} turn ,\, intr0 ,\, intr1 {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ M56 \.{\defeq}}%
-\@x{ \.{\land} pc1 \.{=} 5}%
-\@x{ \.{\land} pc1 \.{'} \.{=} 6}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} intr0 ,\, intr1 ,\, turn {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ M67 \.{\defeq}}%
-\@x{ \.{\land} pc1 \.{=} 6}%
-\@x{ \.{\land} pc1 \.{'} \.{=} 7}%
-\@x{ \.{\land} intr1 \.{'} \.{=} 0}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} intr0 ,\, turn {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ M70 \.{\defeq}}%
-\@x{ \.{\land} pc1 \.{=} 7}%
-\@x{ \.{\land} pc1 \.{'} \.{=} 0}%
-\@x{ \.{\land} {\UNCHANGED} {\langle} turn ,\, intr0 ,\, intr1 {\rangle}}%
-\@pvspace{16.0pt}%
- \@x{ SLOGQ \.{\defeq} {\UNCHANGED} {\langle} pc1 ,\, intr0 ,\, intr1 ,\, turn
- {\rangle}}%
-\@pvspace{8.0pt}%
-\@x{ Next\_First \.{\defeq}}%
-\@x{ \.{\lor} L01}%
-\@x{ \.{\lor} L12}%
-\@x{ \.{\lor} L23}%
-\@x{ \.{\lor} L34}%
-\@x{ \.{\lor} L45}%
-\@x{ \.{\lor} L56}%
-\@x{ \.{\lor} L67}%
-\@x{ \.{\lor} L70}%
-\@x{ \.{\lor} SLOGP}%
-\@pvspace{8.0pt}%
-\@x{ Next\_Second \.{\defeq}}%
-\@x{ \.{\lor} M01}%
-\@x{ \.{\lor} M12}%
-\@x{ \.{\lor} M23}%
-\@x{ \.{\lor} M34}%
-\@x{ \.{\lor} M45}%
-\@x{ \.{\lor} M56}%
-\@x{ \.{\lor} M67}%
-\@x{ \.{\lor} M70}%
-\@x{ \.{\lor} SLOGQ}%
-\@pvspace{8.0pt}%
- \@x{ Next \.{\defeq} ( Next\_First \.{\land} {\UNCHANGED} pc1 ) \.{\lor} (
- Next\_Second \.{\land} {\UNCHANGED} pc0 )}%
-\@pvspace{8.0pt}%
- \@x{ Mutual\_Exclusion \.{\defeq} ( pc0 \.{\neq} 5 ) \.{\lor} ( pc1 \.{\neq}
- 5 )}%
-\@pvspace{8.0pt}%
-\@x{}%
-\@y{\@s{0}%
- we need justice conditions, because here in this example, it can happen that
-}%
-\@xx{}%
-\@x{}%
-\@y{\@s{0}%
- the scheduler never schedules one process
-}%
-\@xx{}%
-\@x{}%
-\@y{\@s{0}%
- we want to avoid such runs \.{??}\.{??}\.{?}
-}%
-\@xx{}%
-\@pvspace{8.0pt}%
-\@x{}%
-\@y{\@s{0}%
- justice conditions
-}%
-\@xx{}%
-\@pvspace{8.0pt}%
-\@x{ J00 \.{\defeq} pc0 \.{\neq} 0}%
-\@x{ J02 \.{\defeq} pc0 \.{\neq} 2}%
-\@x{ J03 \.{\defeq} pc0 \.{\neq} 3}%
-\@pvspace{8.0pt}%
-\@x{}%
-\@y{\@s{0}%
- we cannot write \ensuremath{pc0 \.{\neq} 4}, because that\mbox{'}s not a
- requirement, it should be proven
-}%
-\@xx{}%
- \@x{ J04 \.{\defeq}\@s{4.1} {\lnot} ( ( pc0 \.{=} 4 ) \.{\land} ( ( turn
- \.{=} 0 ) \.{\lor} ( intr1 \.{=} {\FALSE} ) ) )}%
-\@x{ J05 \.{\defeq} pc0 \.{\neq} 5}%
-\@x{ J06 \.{\defeq} pc0 \.{\neq} 6}%
-\@x{ J07 \.{\defeq} pc0 \.{\neq} 7}%
-\@pvspace{8.0pt}%
-\@x{}%
-\@y{\@s{0}%
- for the process 1
-}%
-\@xx{}%
-\@pvspace{8.0pt}%
-\@x{ J10 \.{\defeq} pc1 \.{\neq} 0}%
-\@x{ J12 \.{\defeq} pc1 \.{\neq} 2}%
-\@x{ J13 \.{\defeq} pc1 \.{\neq} 3}%
-\@pvspace{8.0pt}%
- \@x{ J14 \.{\defeq}\@s{4.1} {\lnot} ( ( pc1 \.{=} 4 ) \.{\land} ( ( turn
- \.{=} 0 ) \.{\lor} ( intr0 \.{=} {\FALSE} ) ) )}%
-\@x{ J15 \.{\defeq} pc1 \.{\neq} 5}%
-\@x{ J16 \.{\defeq} pc1 \.{\neq} 6}%
-\@x{ J17 \.{\defeq} pc1 \.{\neq} 7}%
-\@pvspace{8.0pt}%
-\@x{}%
-\@y{\@s{0}%
- the below justice conditions are to ensure that the scheduler is fair
-}%
-\@xx{}%
-\@pvspace{8.0pt}%
-\@x{ J \.{\defeq}}%
-\@x{ \.{\land} J00}%
-\@x{ \.{\land} J02}%
-\@x{ \.{\land} J03}%
-\@x{ \.{\land} J04}%
-\@x{ \.{\land} J05}%
-\@x{ \.{\land} J06}%
-\@x{ \.{\land} J07}%
-\@x{ \.{\land} J10}%
-\@x{ \.{\land} J12}%
-\@x{ \.{\land} J13}%
-\@x{ \.{\land} J14}%
-\@x{ \.{\land} J15}%
-\@x{ \.{\land} J16}%
-\@x{ \.{\land} J17}%
-\@pvspace{56.0pt}%
 \@x{}\bottombar\@xx{}%
 \setboolean{shading}{false}
 \begin{lcom}{0}%
@@ -1245,13 +1031,13 @@ the algorithm is
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
  \ensuremath{\.{\,\backslash\,}}* Last modified \ensuremath{Fri}
- \ensuremath{Feb} 02 11:18:12 \ensuremath{IST} 2024 by
+ \ensuremath{Feb} 02 11:38:44 \ensuremath{IST} 2024 by
  \ensuremath{neerajkrishnan
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{\.{\,\backslash\,}}* Created \ensuremath{Tue} \ensuremath{Jan} 30
- 17:52:27 \ensuremath{IST} 2024 by \ensuremath{neerajkrishnan
+ \ensuremath{\.{\,\backslash\,}}* Created \ensuremath{Fri} \ensuremath{Feb} 02
+ 11:35:21 \ensuremath{IST} 2024 by \ensuremath{neerajkrishnan
 }%
 \end{cpar}%
 \end{lcom}%
