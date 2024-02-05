@@ -81,13 +81,13 @@ P50 ==
 /\ UNCHANGED sema
 
 Next0 ==
-/\ P01
-/\ P12
-/\ P22
-/\ P23
-/\ P34
-/\ P45
-/\ P50
+\/ P01
+\/ P12
+\/ P22
+\/ P23
+\/ P34
+\/ P45
+\/ P50
 
 Q01 ==
 /\ s1 = 0
@@ -127,17 +127,21 @@ Q50 ==
 /\ UNCHANGED sema
 
 Next1 ==
-/\ Q01
-/\ Q12
-/\ Q22
-/\ Q23
-/\ Q34
-/\ Q45
-/\ Q50
+\/ Q01
+\/ Q12
+\/ Q22
+\/ Q23
+\/ Q34
+\/ Q45
+\/ Q50
 
-Next == (Next0 /\ UNCHANGED s1) \/ (Next1 /\ UNCHANGED s0)
+SLOGP == UNCHANGED s0 
+SLOGQ == UNCHANGED s1
 
+Next == (Next0 /\ UNCHANGED s1) \/ (Next1 /\ UNCHANGED s0) \/ SLOGP \/ SLOGQ
 
+\* Video 9 for Justice conditions
+\* The terminology in the video is, Weak Fairness (in TLA+ world, not exactly Justice Conditions)
 
 \* Justice conditions
 
@@ -159,6 +163,19 @@ J ==
 \* hence we need compassion conditions
 
 
+P0 == s0 = 2 /\ sema = "available"
+Q0 == s0 # 2
+
+P1 == s1 = 2 /\ sema = "available"
+Q1 == s1 # 2
+
+\* with this compassion condition, we can show no starvation occurs
+\* i.e if P0 wants to enter critical section ( i.e it performs request(sema), then 
+\* eventually, P0 will be allowed in critical section
+
+\* Similarly for P1
+
+
 
 
 
@@ -177,5 +194,5 @@ J ==
 
 =============================================================================
 \* Modification History
-\* Last modified Fri Feb 02 11:56:33 IST 2024 by neerajkrishnan
+\* Last modified Mon Feb 05 11:39:05 IST 2024 by neerajkrishnan
 \* Created Fri Feb 02 11:35:21 IST 2024 by neerajkrishnan

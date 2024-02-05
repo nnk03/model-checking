@@ -1023,6 +1023,194 @@ for process 1 and 2
 }%
 \end{cpar}%
 \end{lcom}%
+\@x{ {\EXTENDS} Integers}%
+\@x{ {\VARIABLES} s0 ,\, s1 ,\, sema}%
+\@pvspace{8.0pt}%
+\@x{ Init0 \.{\defeq}}%
+\@x{ \.{\land} sema \.{=}\@w{available}}%
+\@x{ \.{\land} s0 \.{=} 0}%
+\@pvspace{8.0pt}%
+\@x{ Init1 \.{\defeq}}%
+\@x{ \.{\land} sema \.{=}\@w{available}}%
+\@x{ \.{\land} s1 \.{=} 1}%
+\@pvspace{8.0pt}%
+\@x{ Init \.{\defeq} Init0 \.{\land} Init1}%
+\@pvspace{8.0pt}%
+\@x{ P01 \.{\defeq}}%
+\@x{ \.{\land} s0 \.{=} 0}%
+\@x{ \.{\land} s0 \.{'} \.{=} 1}%
+\@x{ \.{\land} {\UNCHANGED} sema}%
+\@pvspace{8.0pt}%
+\@x{ P12 \.{\defeq}}%
+\@x{ \.{\land} s0 \.{=} 1}%
+\@x{ \.{\land} s0 \.{'} \.{=} 2}%
+\@x{ \.{\land} {\UNCHANGED} sema}%
+\@pvspace{8.0pt}%
+\@x{ P22 \.{\defeq}}%
+\@x{ \.{\land} s0 \.{=} 2}%
+\@x{ \.{\land} s0 \.{'} \.{=} 2}%
+\@x{ \.{\land} sema \.{=}\@w{busy}}%
+\@x{ \.{\land} sema \.{'} \.{=}\@w{busy}}%
+\@pvspace{8.0pt}%
+\@x{ P23 \.{\defeq}}%
+\@x{ \.{\land} s0 \.{=} 2}%
+\@x{ \.{\land} s0 \.{'} \.{=} 3}%
+\@x{ \.{\land} sema \.{=}\@w{available}}%
+\@x{ \.{\land} sema \.{=}\@w{busy}}%
+\@pvspace{8.0pt}%
+\@x{ P34 \.{\defeq}}%
+\@x{ \.{\land} s0 \.{=} 3}%
+\@x{ \.{\land} s0 \.{'} \.{=} 4}%
+\@x{ \.{\land} {\UNCHANGED} sema}%
+\@pvspace{8.0pt}%
+\@x{ P45 \.{\defeq}}%
+\@x{ \.{\land} s0 \.{=} 4}%
+\@x{ \.{\land} s0 \.{'} \.{=} 5}%
+\@x{ \.{\land} sema \.{'} \.{=}\@w{available}}%
+\@pvspace{8.0pt}%
+\@x{ P50 \.{\defeq}}%
+\@x{ \.{\land} s0 \.{=} 5}%
+\@x{ \.{\land} s0 \.{'} \.{=} 5}%
+\@x{ \.{\land} {\UNCHANGED} sema}%
+\@pvspace{8.0pt}%
+\@x{ Next0 \.{\defeq}}%
+\@x{ \.{\lor} P01}%
+\@x{ \.{\lor} P12}%
+\@x{ \.{\lor} P22}%
+\@x{ \.{\lor} P23}%
+\@x{ \.{\lor} P34}%
+\@x{ \.{\lor} P45}%
+\@x{ \.{\lor} P50}%
+\@pvspace{8.0pt}%
+\@x{ Q01 \.{\defeq}}%
+\@x{ \.{\land} s1 \.{=} 0}%
+\@x{ \.{\land} s1 \.{'} \.{=} 1}%
+\@x{ \.{\land} {\UNCHANGED} sema}%
+\@pvspace{8.0pt}%
+\@x{ Q12 \.{\defeq}}%
+\@x{ \.{\land} s1 \.{=} 1}%
+\@x{ \.{\land} s1 \.{'} \.{=} 2}%
+\@x{ \.{\land} {\UNCHANGED} sema}%
+\@pvspace{8.0pt}%
+\@x{ Q22 \.{\defeq}}%
+\@x{ \.{\land} s1 \.{=} 2}%
+\@x{ \.{\land} s1 \.{'} \.{=} 2}%
+\@x{ \.{\land} sema \.{=}\@w{busy}}%
+\@x{ \.{\land} sema \.{'} \.{=}\@w{busy}}%
+\@pvspace{8.0pt}%
+\@x{ Q23 \.{\defeq}}%
+\@x{ \.{\land} s1 \.{=} 2}%
+\@x{ \.{\land} s1 \.{'} \.{=} 3}%
+\@x{ \.{\land} sema \.{=}\@w{available}}%
+\@x{ \.{\land} sema \.{=}\@w{busy}}%
+\@pvspace{8.0pt}%
+\@x{ Q34 \.{\defeq}}%
+\@x{ \.{\land} s1 \.{=} 3}%
+\@x{ \.{\land} s1 \.{'} \.{=} 4}%
+\@x{ \.{\land} {\UNCHANGED} sema}%
+\@pvspace{8.0pt}%
+\@x{ Q45 \.{\defeq}}%
+\@x{ \.{\land} s1 \.{=} 4}%
+\@x{ \.{\land} s1 \.{'} \.{=} 5}%
+\@x{ \.{\land} sema \.{'} \.{=}\@w{available}}%
+\@pvspace{8.0pt}%
+\@x{ Q50 \.{\defeq}}%
+\@x{ \.{\land} s1 \.{=} 5}%
+\@x{ \.{\land} s1 \.{'} \.{=} 5}%
+\@x{ \.{\land} {\UNCHANGED} sema}%
+\@pvspace{8.0pt}%
+\@x{ Next1 \.{\defeq}}%
+\@x{ \.{\lor} Q01}%
+\@x{ \.{\lor} Q12}%
+\@x{ \.{\lor} Q22}%
+\@x{ \.{\lor} Q23}%
+\@x{ \.{\lor} Q34}%
+\@x{ \.{\lor} Q45}%
+\@x{ \.{\lor} Q50}%
+\@pvspace{8.0pt}%
+\@x{ SLOGP\@s{0.79} \.{\defeq} {\UNCHANGED} s0}%
+\@x{ SLOGQ \.{\defeq} {\UNCHANGED} s1}%
+\@pvspace{8.0pt}%
+ \@x{ Next \.{\defeq} ( Next0 \.{\land} {\UNCHANGED} s1 ) \.{\lor} ( Next1
+ \.{\land} {\UNCHANGED} s0 ) \.{\lor} SLOGP \.{\lor} SLOGQ}%
+\@pvspace{8.0pt}%
+\@x{}%
+\@y{\@s{0}%
+ Video 9 for Justice conditions
+}%
+\@xx{}%
+\@x{}%
+\@y{\@s{0}%
+ The terminology in the video is, Weak Fairness (in TLA+ world, not exactly
+ Justice Conditions)
+}%
+\@xx{}%
+\@pvspace{8.0pt}%
+\@x{}%
+\@y{\@s{0}%
+ Justice conditions
+}%
+\@xx{}%
+\@pvspace{8.0pt}%
+\@x{ J \.{\defeq}}%
+\@x{ \.{\land} {\lnot} ( s0 \.{=} 0 )}%
+\@x{ \.{\land} {\lnot} ( s0 \.{=} 3 )}%
+\@x{ \.{\land} {\lnot} ( s0 \.{=} 4 )}%
+\@x{ \.{\land} {\lnot} ( s0 \.{=} 5 )}%
+\@x{ \.{\land} {\lnot} ( s1 \.{=} 0 )}%
+\@x{ \.{\land} {\lnot} ( s1 \.{=} 3 )}%
+\@x{ \.{\land} {\lnot} ( s1 \.{=} 4 )}%
+\@x{ \.{\land} {\lnot} ( s1 \.{=} 5 )}%
+\@x{ \.{\land} {\lnot} ( s0 \.{=} 2 \.{\land} sema \.{=}\@w{available} )}%
+\@x{ \.{\land} {\lnot} ( s1 \.{=} 2 \.{\land} sema \.{=}\@w{available} )}%
+\@pvspace{8.0pt}%
+\@x{}%
+\@y{\@s{0}%
+ but the problem with this is bounded weight need not be satisfied only with
+ the first 10 justice conditions
+}%
+\@xx{}%
+\@x{}%
+\@y{\@s{0}%
+ ie, one process can starve even if we assume fair scheduler
+}%
+\@xx{}%
+\@pvspace{8.0pt}%
+\@x{}%
+\@y{\@s{0}%
+ hence we need compassion conditions
+}%
+\@xx{}%
+\@pvspace{16.0pt}%
+\@x{ P0\@s{0.79} \.{\defeq} s0 \.{=} 2 \.{\land} sema \.{=}\@w{available}}%
+\@x{ Q0 \.{\defeq} s0 \.{\neq} 2}%
+\@pvspace{8.0pt}%
+\@x{ P1\@s{0.79} \.{\defeq} s1 \.{=} 2 \.{\land} sema \.{=}\@w{available}}%
+\@x{ Q1 \.{\defeq} s1 \.{\neq} 2}%
+\@pvspace{8.0pt}%
+\@x{}%
+\@y{\@s{0}%
+ with this compassion condition, we can show no starvation occurs
+}%
+\@xx{}%
+\@x{}%
+\@y{\@s{0}%
+ \ensuremath{i.e} if \ensuremath{P0} wants to enter critical section (
+ \ensuremath{i.e} it performs \ensuremath{request(sema)}, then
+}%
+\@xx{}%
+\@x{}%
+\@y{\@s{0}%
+ eventually, \ensuremath{P0} will be allowed in critical section
+}%
+\@xx{}%
+\@pvspace{8.0pt}%
+\@x{}%
+\@y{\@s{0}%
+ Similarly for \ensuremath{P1
+}}%
+\@xx{}%
+\@pvspace{144.0pt}%
 \@x{}\bottombar\@xx{}%
 \setboolean{shading}{false}
 \begin{lcom}{0}%
@@ -1030,8 +1218,8 @@ for process 1 and 2
 \ensuremath{\.{\,\backslash\,}}* Modification History
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{\.{\,\backslash\,}}* Last modified \ensuremath{Fri}
- \ensuremath{Feb} 02 11:38:44 \ensuremath{IST} 2024 by
+ \ensuremath{\.{\,\backslash\,}}* Last modified \ensuremath{Mon}
+ \ensuremath{Feb} 05 11:39:05 \ensuremath{IST} 2024 by
  \ensuremath{neerajkrishnan
 }%
 \end{cpar}%
