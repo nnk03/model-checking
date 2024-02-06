@@ -946,10 +946,10 @@
 Initially
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{Light1 \.{=}} Red
+\ensuremath{Light0 \.{=}} Red
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{Light2 \.{=}} Green
+\ensuremath{Light1 \.{=}} Green
  Counter \ensuremath{\.{=} 20
 }%
 \end{cpar}%
@@ -967,73 +967,134 @@ Light \ensuremath{i
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{2 \.{:}\@s{22.5}flip} \ensuremath{color} \ensuremath{of}
+ \ensuremath{1 \.{:}\@s{22.5}flip} \ensuremath{color} \ensuremath{of}
  \ensuremath{Light} \ensuremath{i
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{3 \.{:}\@s{22.5}Set} \ensuremath{Counter} \ensuremath{to}
+ \ensuremath{1 \.{:}\@s{22.5}Set} \ensuremath{Counter} \ensuremath{to}
  \ensuremath{20
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{4 \.{:}\@s{12.5}\}
+\ensuremath{1 \.{:}\@s{12.5}\}
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{5 \.{:}\@s{12.5}else \{
+\ensuremath{1 \.{:}\@s{12.5}else \{
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{6 \.{:}\@s{22.5}decrement} \ensuremath{counter
+\ensuremath{1 \.{:}\@s{22.5}decrement} \ensuremath{counter
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
-\ensuremath{7 \.{:}\@s{12.5}\}
-}%
-\end{cpar}%
-\vshade{5.0}%
-\begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{Check} \ensuremath{if} \ensuremath{light} \ensuremath{1}
- \ensuremath{has} \ensuremath{color} \ensuremath{green} \ensuremath{and}
- \ensuremath{light} \ensuremath{2} \ensuremath{has} \ensuremath{color}
- \ensuremath{green} \ensuremath{can} \ensuremath{ever} \ensuremath{occur}
- \ensuremath{in} \ensuremath{the} \ensuremath{synchronous
+\ensuremath{1 \.{:}\@s{12.5}\}
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{composition} \ensuremath{of} \ensuremath{these}
- \ensuremath{systems
+\ensuremath{2 \.{:} \}
 }%
+\end{cpar}%
+\begin{cpar}{0}{F}{F}{0}{0}{}%
+ Check if light 0 has color green and light 1 has color green can ever occur
+ in the synchronous
+ composition of these systems
 \end{cpar}%
 \vshade{5.0}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{In} \ensuremath{your} \ensuremath{model} \ensuremath{assume}
- \ensuremath{that} \ensuremath{if} \ensuremath{there} \ensuremath{is}
- \ensuremath{a} \ensuremath{slog (stutter),\, both} \ensuremath{lights}
- \ensuremath{stutter} \ensuremath{together
-}%
-\end{cpar}%
-\begin{cpar}{0}{F}{F}{0}{0}{}%
- \ensuremath{(By} \ensuremath{default,\, such} \ensuremath{a}
- \ensuremath{transition} \ensuremath{is} \ensuremath{assumed} \ensuremath{in}
- \ensuremath{TLA\.{+})
-}%
+ In your model assume that if there is a slog (stutter), both lights stutter
+ together
+ (By default, such a transition is assumed in TLA+)
 \end{cpar}%
 \end{lcom}%
 \@x{ {\EXTENDS} Integers}%
-\@x{ {\VARIABLES} l1 ,\, l2 ,\, counter}%
+\@x{ {\VARIABLES} pc0 ,\, pc1 ,\, l0 ,\, l1 ,\, counter}%
 \@pvspace{8.0pt}%
+\begin{lcom}{0}%
+\begin{cpar}{0}{F}{F}{0}{0}{}%
+0 denotes red and 1 denotes green for lights
+\end{cpar}%
+\vshade{10.0}%
+\begin{cpar}{0}{F}{F}{0}{0}{}%
+variables for LIGHT 0 is \ensuremath{pc0}, \ensuremath{l1}, counter ;
+ variables for LIGHT 1 is \ensuremath{pc1}, \ensuremath{l2}, counter
+\end{cpar}%
+\end{lcom}%
 \@x{ TypeOK \.{\defeq}}%
-\@x{ \.{\land} l1 \.{\in} \{\@w{red} ,\,\@w{green} \}}%
-\@x{ \.{\land} l2 \.{\in} \{\@w{red} ,\,\@w{green} \}}%
+\@x{ \.{\land} pc0 \.{\in} 0 \.{\dotdot} 2}%
+\@x{ \.{\land} pc1 \.{\in} 0 \.{\dotdot} 2}%
+\@x{ \.{\land} l0 \.{\in} \{ 0 ,\, 1 \}}%
+\@x{ \.{\land} l1 \.{\in} \{ 0 ,\, 1 \}}%
 \@x{ \.{\land} counter \.{\in} 0 \.{\dotdot} 20}%
 \@pvspace{16.0pt}%
 \@x{ Init \.{\defeq}}%
-\@x{ \.{\land} l1 \.{=}\@w{red}}%
-\@x{ \.{\land} l2 \.{=}\@w{green}}%
+\@x{ \.{\land} pc0 \.{=} 0}%
+\@x{ \.{\land} pc1 \.{=} 0}%
+\@x{ \.{\land} l0 \.{=} 0}%
+\@x{ \.{\land} l1 \.{=} 1}%
 \@x{ \.{\land} counter \.{=} 20}%
-\@pvspace{176.0pt}%
+\@pvspace{8.0pt}%
+\@x{ P01 \.{\defeq}}%
+\@x{ \.{\land} pc0 \.{=} 0}%
+\@x{ \.{\land} pc0 \.{'} \.{=} 1}%
+\@x{ \.{\land} {\UNCHANGED} {\langle} l0 ,\, counter {\rangle}}%
+\@pvspace{8.0pt}%
+\@x{ P12 \.{\defeq}}%
+\@x{ \.{\land} {\IF} counter \.{=} 0}%
+\@x{\@s{15.21} \.{\THEN} \.{\land} l0 \.{'} \.{=} 1 \.{-} l0}%
+\@x{\@s{46.52} \.{\land} counter \.{'} \.{=} 20}%
+\@x{\@s{15.21} \.{\ELSE} \.{\land} counter \.{'} \.{=} counter \.{-} 1}%
+\@x{\@s{46.52} \.{\land} {\UNCHANGED} l0}%
+\@x{ \.{\land} pc0 \.{=} 1}%
+\@x{ \.{\land} pc0 \.{'} \.{=} 2}%
+\@pvspace{8.0pt}%
+\@x{ P20 \.{\defeq}}%
+\@x{ \.{\land} pc0 \.{=} 2}%
+\@x{ \.{\land} pc0 \.{'} \.{=} 3}%
+\@x{ \.{\land} {\UNCHANGED} {\langle} counter ,\, l0 {\rangle}}%
+\@pvspace{24.0pt}%
+\@x{ Next0 \.{\defeq}}%
+\@x{ \.{\lor} P01}%
+\@x{ \.{\lor} P12}%
+\@x{ \.{\lor} P20}%
+\@pvspace{8.0pt}%
+\@x{ Q01 \.{\defeq}}%
+\@x{ \.{\land} pc1 \.{=} 0}%
+\@x{ \.{\land} pc1 \.{'} \.{=} 1}%
+\@x{ \.{\land} {\UNCHANGED} {\langle} l1 ,\, counter {\rangle}}%
+\@pvspace{8.0pt}%
+\@x{ Q12 \.{\defeq}}%
+\@x{ \.{\land} {\IF} counter \.{=} 0}%
+\@x{\@s{15.21} \.{\THEN} \.{\land} l1 \.{'} \.{=} 1 \.{-} l1}%
+\@x{\@s{46.52} \.{\land} counter \.{'} \.{=} 20}%
+\@x{\@s{15.21} \.{\ELSE} \.{\land} counter \.{'} \.{=} counter \.{-} 1}%
+\@x{\@s{46.52} \.{\land} {\UNCHANGED} l1}%
+\@x{ \.{\land} pc1 \.{=} 1}%
+\@x{ \.{\land} pc1 \.{'} \.{=} 2}%
+\@pvspace{8.0pt}%
+\@x{ Q20 \.{\defeq}}%
+\@x{ \.{\land} pc1 \.{=} 2}%
+\@x{ \.{\land} pc1 \.{'} \.{=} 3}%
+\@x{ \.{\land} {\UNCHANGED} {\langle} counter ,\, l1 {\rangle}}%
+\@pvspace{24.0pt}%
+\@x{ Next1 \.{\defeq}}%
+\@x{ \.{\lor} Q01}%
+\@x{ \.{\lor} Q12}%
+\@x{ \.{\lor} Q20}%
+\@pvspace{8.0pt}%
+ \@x{ SLOG\_TOGETHER \.{\defeq} {\UNCHANGED} {\langle} pc0 ,\, pc1 ,\, l0 ,\,
+ l1 ,\, counter {\rangle}}%
+\@pvspace{8.0pt}%
+\@x{}%
+\@y{\@s{0}%
+ since it\mbox{'}s synchronous composition
+}%
+\@xx{}%
+\@x{ Next \.{\defeq} ( Next0 \.{\land} Next1 ) \.{\lor} SLOG\_TOGETHER}%
+\@pvspace{8.0pt}%
+\@x{ Both\_Not\_Green \.{\defeq} {\lnot} ( l0 \.{=} 1 \.{\land} l1 \.{=} 1 )}%
+\@pvspace{160.0pt}%
 \@x{}\bottombar\@xx{}%
 \setboolean{shading}{false}
 \begin{lcom}{0}%
@@ -1042,7 +1103,7 @@ Light \ensuremath{i
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%
  \ensuremath{\.{\,\backslash\,}}* Last modified \ensuremath{Tue}
- \ensuremath{Feb} 06 18:27:42 \ensuremath{IST} 2024 by \ensuremath{neeraj
+ \ensuremath{Feb} 06 19:25:46 \ensuremath{IST} 2024 by \ensuremath{neeraj
 }%
 \end{cpar}%
 \begin{cpar}{0}{F}{F}{0}{0}{}%

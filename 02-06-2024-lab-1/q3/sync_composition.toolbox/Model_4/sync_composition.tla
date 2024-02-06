@@ -12,10 +12,10 @@ Light i
 1 :         flip color of Light i
 1 :         Set Counter to 20
 1 :     }
-1 :     else {
-1 :         decrement counter
-1 :     }
-2 : }
+2 :     else {
+2 :         decrement counter
+2 :     }
+3 : }
 Check if light 0 has color green and light 1 has color green can ever occur in the synchronous
 composition of these systems
 
@@ -31,14 +31,14 @@ VARIABLES pc0, pc1, l0, l1, counter
 0 denotes red and 1 denotes green for lights 
 *)
 (* 
-variables for LIGHT 0 is pc0, l1, counter ;
+variables for LIGHT 0 is pc0, l1, counter
 variables for LIGHT 1 is pc1, l2, counter
 *)
 
 
 TypeOK == 
-/\ pc0 \in 0..2
-/\ pc1 \in 0..2
+/\ pc0 \in 0..3
+/\ pc1 \in 0..3
 /\ l0 \in {0, 1}
 /\ l1 \in {0, 1}
 /\ counter \in 0..20
@@ -65,17 +65,21 @@ P12 ==
 /\ pc0 = 1
 /\ pc0' = 2
 
-P20 ==
+P23 ==
 /\ pc0 = 2
 /\ pc0' = 3
 /\ UNCHANGED << counter, l0 >>
 
-
+P30 ==
+/\ pc0 = 3
+/\ pc0 =  0
+/\ UNCHANGED << counter, l0 >>
 
 Next0 ==
 \/ P01
 \/ P12
-\/ P20
+\/ P23
+\/ P30
 
 Q01 == 
 /\ pc1 = 0
@@ -91,17 +95,21 @@ Q12 ==
 /\ pc1 = 1
 /\ pc1' = 2
 
-Q20 ==
+Q23 ==
 /\ pc1 = 2
 /\ pc1' = 3
 /\ UNCHANGED << counter, l1 >>
 
-
+Q30 ==
+/\ pc1 = 3
+/\ pc1 =  0
+/\ UNCHANGED << counter, l1 >>
 
 Next1 ==
 \/ Q01
 \/ Q12
-\/ Q20
+\/ Q23
+\/ Q30
 
 SLOG_TOGETHER == UNCHANGED << pc0, pc1, l0, l1, counter >>
 
@@ -131,5 +139,5 @@ Both_Not_Green == ~(l0 = 1 /\ l1 = 1)
 
 =============================================================================
 \* Modification History
-\* Last modified Tue Feb 06 19:25:46 IST 2024 by neeraj
+\* Last modified Tue Feb 06 19:18:14 IST 2024 by neeraj
 \* Created Tue Feb 06 18:18:16 IST 2024 by neeraj
