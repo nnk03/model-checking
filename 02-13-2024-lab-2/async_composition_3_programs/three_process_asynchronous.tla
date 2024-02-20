@@ -8,7 +8,7 @@ Initially x = 0
 
 for process Pi
 
-0 : for k_i = 1; k_i <= 10; ++k_i {
+0 : for k_i = 1; k_i <= 5; ++k_i {
 1 :     r_i <- x
 2 :     r_i <- r_i + 1
 3 :     x <- r_i
@@ -203,7 +203,7 @@ Next ==
 
 
 CHECK ==
-<>(k0 = 6
+~(k0 = 6
 /\ k1 = 6
 /\ k2 = 6
 /\ x = 2)
@@ -232,5 +232,5 @@ CHECK ==
 
 =============================================================================
 \* Modification History
-\* Last modified Tue Feb 13 19:24:32 IST 2024 by neeraj
+\* Last modified Tue Feb 20 18:04:20 IST 2024 by neeraj
 \* Created Tue Feb 13 17:43:15 IST 2024 by neeraj
