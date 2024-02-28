@@ -13,11 +13,11 @@ Init ==
     /\ small = 0
 
 FillSmall == 
-    /\ small' = 5
+    /\ small' = 3
     /\ big' = big
 
 FillBig == 
-    /\ big' = 7
+    /\ big' = 5
     /\ small' = small
 
 EmptySmall ==
@@ -29,19 +29,19 @@ EmptyBig ==
     /\ small' = small
 
 SmallToBig == 
-    IF big + small =< 7
+    IF big + small =< 5
         THEN /\ big' = big + small
              /\ small' = 0
-        ELSE /\ small' = small - (7 - big)
-             /\ big' = 7
+        ELSE /\ small' = small - (5 - big)
+             /\ big' = 5
         
 
 BigToSmall == 
-    IF big + small =< 5
+    IF big + small =< 3
         THEN /\ big' = 0
              /\ small' = big + small
-        ELSE /\ big' = small - (5 - big)
-             /\ small' = 5
+        ELSE /\ big' = small - (3 - big)
+             /\ small' = 3
 
 Next ==
     \/ FillSmall
@@ -51,13 +51,13 @@ Next ==
     \/ SmallToBig
     \/ BigToSmall
 
-\* We need 6 gallons in one jug, is it possible
-NegReq == big # 6
+\* We need 4 gallons in one jug, is it possible
+NegReq == big # 4
 
 
 
 =============================================================================
 \* Modification History
-\* Last modified Tue Feb 06 17:15:32 IST 2024 by neeraj
+\* Last modified Tue Feb 27 08:41:57 IST 2024 by neeraj
 \* Last modified Tue Jan 30 15:38:12 IST 2024 by neerajkrishnan
 \* Created Tue Jan 30 14:47:17 IST 2024 by neerajkrishnan
