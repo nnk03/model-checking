@@ -27,68 +27,68 @@ Init_controller == controller = 0
 
 Init == Init_gate /\ Init_train /\ Init_controller
 
-\*Gate_Lower == 
-\*/\ gate = "up"
-\*/\ gate' = "down"
-Gate_Lower ==
-IF gate = "up" THEN gate' = "down"
-ELSE UNCHANGED << gate >>
+Gate_Lower == 
+/\ gate = "up"
+/\ gate' = "down"
+\*Gate_Lower ==
+\*IF gate = "up" THEN gate' = "down"
+\*ELSE UNCHANGED << gate >>
 
-\*Gate_Raise ==
-\*/\ gate = "down"
-\*/\ gate' = "up"
 Gate_Raise ==
-IF gate = "down" THEN gate' = "up"
-ELSE UNCHANGED << gate >>
+/\ gate = "down"
+/\ gate' = "up"
+\*Gate_Raise ==
+\*IF gate = "down" THEN gate' = "up"
+\*ELSE UNCHANGED << gate >>
 
-\*Train_Approach ==
-\*/\ train = "far"
-\*/\ train' = "near"
 Train_Approach ==
-IF train = "far" THEN train' = "near"
-ELSE UNCHANGED train
+/\ train = "far"
+/\ train' = "near"
+\*Train_Approach ==
+\*IF train = "far" THEN train' = "near"
+\*ELSE UNCHANGED train
 
-\*Train_Enter ==
-\*/\ train = "near"
-\*/\ train' = "in"
 Train_Enter ==
-IF train = "near" THEN train' = "in"
-ELSE UNCHANGED train
+/\ train = "near"
+/\ train' = "in"
+\*Train_Enter ==
+\*IF train = "near" THEN train' = "in"
+\*ELSE UNCHANGED train
 
-\*Train_Exit ==
-\*/\ train = "in"
-\*/\ train' = "far"
 Train_Exit ==
-IF train = "in" THEN train' = "far"
-ELSE UNCHANGED train
+/\ train = "in"
+/\ train' = "far"
+\*Train_Exit ==
+\*IF train = "in" THEN train' = "far"
+\*ELSE UNCHANGED train
 
-\*Controller_Approach ==
-\*/\ controller = 0
-\*/\ controller' = 1
 Controller_Approach ==
-IF controller = 0 THEN controller' = 1
-ELSE UNCHANGED controller
+/\ controller = 0
+/\ controller' = 1
+\*Controller_Approach ==
+\*IF controller = 0 THEN controller' = 1
+\*ELSE UNCHANGED controller
 
-\*Controller_Lower ==
-\*/\ controller = 1
-\*/\ controller' = 2
 Controller_Lower ==
-IF controller = 1 THEN controller' = 2
-ELSE UNCHANGED controller
+/\ controller = 1
+/\ controller' = 2
+\*Controller_Lower ==
+\*IF controller = 1 THEN controller' = 2
+\*ELSE UNCHANGED controller
 
-\*Controller_Exit ==
-\*/\ controller = 2
-\*/\ controller' = 3
 Controller_Exit ==
-IF controller = 2 THEN controller' = 3
-ELSE UNCHANGED controller
+/\ controller = 2
+/\ controller' = 3
+\*Controller_Exit ==
+\*IF controller = 2 THEN controller' = 3
+\*ELSE UNCHANGED controller
 
-\*Controller_Raise ==
-\*/\ controller = 3
-\*/\ controller' = 0
 Controller_Raise ==
-IF controller = 3 THEN controller' = 0
-ELSE UNCHANGED controller
+/\ controller = 3
+/\ controller' = 0
+\*Controller_Raise ==
+\*IF controller = 3 THEN controller' = 0
+\*ELSE UNCHANGED controller
 
 Next_Lower ==
 /\ Gate_Lower
@@ -141,5 +141,5 @@ Check_Reachable ==
 
 =============================================================================
 \* Modification History
-\* Last modified Tue Feb 20 19:04:17 IST 2024 by neeraj
+\* Last modified Tue Mar 05 17:21:43 IST 2024 by neeraj
 \* Created Tue Feb 20 17:26:17 IST 2024 by neeraj
