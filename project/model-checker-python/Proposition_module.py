@@ -6,7 +6,7 @@ PROPOSITION_HASH = 1
 class Proposition():
     def __init__(self, proposition_number : int):
         assert(isinstance(proposition_number, int))
-        self.proposition = proposition_number
+        self.proposition_number = proposition_number
 
     def __hash__(self) -> int:
         """
@@ -15,10 +15,10 @@ class Proposition():
         as states will be hashed as 
         (0, state_number)
         """
-        return hash((PROPOSITION_HASH, self.proposition))
+        return hash((PROPOSITION_HASH, self.proposition_number))
     
     def __str__(self):
-        res = f'{{PROPOSITION {self.proposition}}}'
+        res = f'{{PROPOSITION {self.proposition_number}}}'
         return res
 
 

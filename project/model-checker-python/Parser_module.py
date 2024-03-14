@@ -16,6 +16,9 @@ class Parser():
     def parse(self):
         pass
 
+    def construct_parse_tree(self, formula : str):
+        # return None as of now
+        return None
 
 
 
