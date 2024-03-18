@@ -1,13 +1,8 @@
 """
 Class for Parser
 """
-from enum import Enum
-from Node import *
+from Node_module import *
 
-class Operators(Enum):
-    EF = 'EF'
-    EX = 'EX'
-    EU = 'EU'
 
 class Parser():
     def __init__(self):

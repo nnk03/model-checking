@@ -1,7 +1,7 @@
 """
 Class for propositions
 """
-PROPOSITION_HASH = 1
+from globals import *
 
 class Proposition():
     def __init__(self, proposition_number : int):

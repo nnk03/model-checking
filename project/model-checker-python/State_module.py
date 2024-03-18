@@ -1,7 +1,7 @@
 """
 Class for states
 """
-STATE_HASH = 0
+from globals import *
 
 from Proposition_module import Proposition
 

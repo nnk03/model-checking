@@ -4,6 +4,7 @@ Propositions are numbered
 Negation is represented as '-'
 """
 
+from globals import *
 from State_module import State
 from Proposition_module import Proposition
 
@@ -76,8 +77,6 @@ class PropositionNode(Node):
         return hash(self.proposition)
         
 
-HASH_TRUE = 2
-HASH_FALSE = 3
 
 class BooleanNode(Node):
     def __init__(self, bool_value : bool):
@@ -92,7 +91,6 @@ class BooleanNode(Node):
         else:
             return hash((HASH_FALSE, False))
 
-HASH_OPERATOR_NODE = 4
 class OperatorNode(Node):
     def __init__(self, 
                  operator : str, 
