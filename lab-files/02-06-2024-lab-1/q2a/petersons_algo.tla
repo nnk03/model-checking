@@ -89,7 +89,7 @@ L56 ==
 L67 ==
 /\ pc0 = 6
 /\ pc0' = 7
-/\ intr0' = 0
+/\ intr0' = FALSE
 /\ UNCHANGED <<intr1, turn>>
 
 L70 ==
@@ -145,7 +145,7 @@ M56 ==
 M67 ==
 /\ pc1 = 6
 /\ pc1' = 7
-/\ intr1' = 0
+/\ intr1' = FALSE
 /\ UNCHANGED <<intr0, turn>>
 
 M70 ==
