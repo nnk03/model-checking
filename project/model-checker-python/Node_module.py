@@ -106,7 +106,9 @@ class OperatorNode(Node):
         """
         assert((down != None and left == None and right == None) or (left != None and right != None and down == None))
         super().__init__()
+        # have to convert to the ENUM
         self.operator = operator
+
         self.isTemporal = isTemporal
         self.down = down
         self.left = left

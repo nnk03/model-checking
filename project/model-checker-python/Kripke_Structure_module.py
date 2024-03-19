@@ -7,6 +7,7 @@ class Kripke_Structure():
         self.n = n # number of states
         self.m = m # number of propositional variables
         self.states = [State(i) for i in range(n)]
+        self.states_set = set(self.states)
         self.propositional_variables = [Proposition(i) for i in range(m)]
 
         
