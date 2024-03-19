@@ -1,0 +1,123 @@
+-- (*
+-- Model Peterson's Algorithm for 2 processes and check mutual exclusion condition
+-- 
+-- asynchronous system
+-- 
+-- for i = 0, 1
+-- 
+-- the algorithm is
+-- 
+-- 0 : while(True){
+-- 1 :     // non critical section
+-- 2 :     intr[i] = True
+-- 3 :     turn = 1 - i
+-- 4 :     while(turn == 1 and intr[1 - i] == 1) // wait
+-- 5 :     // critical section
+-- 6 :     intr[i] = 0
+-- 7 : }
+-- transitions can be 12, 23, 34, 44, 45, 56, 61
+-- 
+-- *)
+
+MODULE peterson_process(other_pc, turn, id, intr)
+VAR
+	pc : 1..6;
+
+INIT
+	pc = 1;
+
+TRANS
+	-- 12
+	(
+		pc = 1 &
+		next(pc) = 2 &
+		next(intr[id]) = intr[id] &
+		-- next(intr[1 - id]) = intr[1 - id] &
+		next(turn) = turn
+	) |
+
+	-- 23
+	(
+		pc = 2 &
+		next(pc) = 3 &
+		next(intr[id]) = 1 &
+		-- next(intr[1 - id]) = intr[1 - id] &
+		next(turn) = turn
+	) |
+
+	-- 34
+	(
+		pc = 3 &
+		next(pc) = 4 &
+		next(turn) = 1 - id &
+		next(intr[id]) = intr[id] &
+		-- next(intr[1 - id]) = intr[1 - id]
+	) |
+
+	-- 44
+	(
+		pc = 4 &
+		turn = 1 - id &
+		intr[1 - id] = 1 &
+		next(pc) = 4 &
+		next(turn) = turn &
+		next(intr[id]) = intr[id] &
+		-- next(intr[1 - id]) = intr[1 - id]
+	) |
+
+	-- 45
+	(
+		pc = 4 &
+		next(pc) = 5 &
+		(turn = id | intr[1 - id] = 0) &
+		next(turn) = turn &
+		next(intr[id]) = intr[id] &
+		-- next(intr[1 - id]) = intr[1 - id]
+	) |
+
+	-- 56
+	(
+		pc = 5 &
+		next(pc) = 6 &
+		next(intr[id]) = intr[id] &
+		-- next(intr[1 - id]) = intr[1 - id] &
+		next(turn) = turn
+	) |
+
+	-- 61
+	(
+		pc = 6 &
+		next(pc) = 1 &
+		next(intr[id]) = 0 &
+		-- next(intr[1 - id]) = intr[1 - id] &
+		next(turn) = turn
+	);
+
+FAIRNESS running
+
+MODULE main
+VAR
+	turn : 0..1;
+	intr : array 0..1 of 0..1;
+
+	a : process peterson_process(b.pc, turn, 0, intr);
+	b : process peterson_process(a.pc, turn, 1, intr);
+
+LTLSPEC
+	G (a.pc != 5 | b.pc != 5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

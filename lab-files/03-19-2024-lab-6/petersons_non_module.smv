@@ -1,0 +1,255 @@
+-- (*
+-- Model Peterson's Algorithm for 2 processes and check mutual exclusion condition
+-- 
+-- asynchronous system
+-- 
+-- for i = 0, 1
+-- 
+-- the algorithm is
+-- 
+-- 0 : while(True){
+-- 1 :     // non critical section
+-- 2 :     intr[i] = True
+-- 3 :     turn = 1 - i
+-- 4 :     while(turn == 1 and intr[1 - i] == 1) // wait
+-- 5 :     // critical section
+-- 6 :     intr[i] = 0
+-- 7 : }
+-- 
+-- 
+-- *)
+
+MODULE peterson_process
+VAR
+	pc : 0..7;
+INIT
+	pc = 0;
+
+
+MODULE main
+VAR
+	turn : 0..1;
+	intr0 : 0..1;
+	intr1 : 0..1;
+
+	a : process peterson_process;
+	b : process peterson_process;
+
+INIT
+-- initial condition
+	turn = 0 &
+	intr0 = 0 &
+	intr1 = 0;
+
+TRANS
+	-- L01
+	(
+		a.pc = 0 & (
+		next(a.pc) = 1 &
+		next(turn) = turn &
+		next(intr0) = intr0 &
+		next(intr1) = intr1 &
+		next(b.pc) = b.pc
+		)
+	) |
+
+	-- L12
+	(
+		a.pc = 1 & (
+			next(a.pc) = 2 &
+			next(turn) = turn &
+			next(intr0) = intr0 &
+			next(intr1) = intr1 &
+			next(b.pc) = b.pc
+		)
+	) |
+
+	-- L23
+	(
+		a.pc = 2 & (
+			next(a.pc) = 3 &
+			next(intr0) = 1 &
+			next(intr1) = intr1 &
+			next(turn) = turn &
+			next(b.pc) = b.pc
+		)
+	) |
+
+	-- L34
+	(
+		a.pc = 3 & (
+			next(a.pc) = 4 &
+			next(turn) = 1 &
+			next(intr0) = intr0 &
+			next(intr1) = intr1 &
+			next(b.pc) = b.pc
+		)
+	) |
+
+	-- L44
+	(
+		(a.pc = 4 & turn = 1 & intr1 = 1) & (
+			next(a.pc) = 4 &
+			next(intr0) = intr0 &
+			next(turn) = turn &
+			next(intr1) = intr1 &
+			next(b.pc) = b.pc
+		)
+	) |
+
+	-- L45
+	(
+		(a.pc = 4) &
+		next(a.pc) = 5 &
+		(turn = 0 | intr1 = 0) &
+		next(turn) = turn &
+		next(intr0) = intr0 &
+		next(intr1) = intr1 &
+		next(b.pc) = b.pc
+	) |
+
+	-- L56
+	(
+		(a.pc = 5) & (
+			next(a.pc) = 6 &
+			next(intr0) = intr0 &
+			next(intr1) = intr1 &
+			next(turn) = turn &
+			next(b.pc) = b.pc
+		)
+	) |
+
+	-- L67
+	(
+		a.pc = 6 &
+		next(a.pc) = 7 &
+		next(intr0) = 0 &
+		next(intr1) = intr1 &
+		next(turn) = turn &
+		next(b.pc) = b.pc
+	) |
+
+	-- L70
+	(
+		a.pc = 7 &
+		next(a.pc) = 0 &
+		next(turn) = turn &
+		next(intr0) = intr0 &
+		next(intr1) = intr1 &
+		next(b.pc) = b.pc
+	) |
+
+	-- M01
+	(
+		b.pc = 0 & (
+		next(b.pc) = 1 &
+		next(turn) = turn &
+		next(intr0) = intr0 &
+		next(intr1) = intr1 &
+		next(a.pc) = a.pc
+		)
+	) |
+
+	-- M12
+	(
+		b.pc = 1 & (
+			next(b.pc) = 2 &
+			next(turn) = turn &
+			next(intr0) = intr0 &
+			next(intr1) = intr1 &
+			next(a.pc) = a.pc
+		)
+	) |
+
+	-- M23
+	(
+		b.pc = 2 & (
+			next(b.pc) = 3 &
+			next(intr1) = 1 &
+			next(intr0) = intr0 &
+			next(turn) = turn &
+			next(a.pc) = a.pc
+		)
+	) |
+
+	-- M34
+	(
+		b.pc = 3 & (
+			next(b.pc) = 4 &
+			next(turn) = 0 &
+			next(intr0) = intr0 &
+			next(intr1) = intr1 &
+			next(a.pc) = a.pc
+		)
+	) |
+
+	-- M44
+	(
+		(b.pc = 4 & turn = 0 & intr0 = 1) & (
+			next(b.pc) = 4 &
+			next(intr0) = intr0 &
+			next(intr1) = intr1 &
+			next(turn) = turn &
+			next(a.pc) = a.pc
+		)
+	) |
+
+	-- M45
+	(
+		(b.pc = 4) &
+		next(b.pc) = 5 &
+		(turn = 1 | intr0 = 0) &
+		next(turn) = turn &
+		next(intr0) = intr0 &
+		next(intr1) = intr1 &
+		next(a.pc) = a.pc
+	) |
+
+	-- M56
+	(
+		(b.pc = 5) & (
+			next(b.pc) = 6 &
+			next(intr0) = intr0 &
+			next(intr1) = intr1 &
+			next(turn) = turn &
+			next(a.pc) = a.pc
+		)
+	) |
+
+	-- M67
+	(
+		b.pc = 6 &
+		next(b.pc) = 7 &
+		next(intr1) = 0 &
+		next(intr0) = intr0 &
+		next(turn) = turn &
+		next(a.pc) = a.pc
+	) |
+
+	-- M70
+	(
+		b.pc = 7 &
+		next(b.pc) = 0 &
+		next(turn) = turn &
+		next(intr0) = intr0 &
+		next(intr1) = intr1 &
+		next(a.pc) = a.pc
+	);
+
+
+LTLSPEC
+	G (a.pc != 5 | b.pc != 5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
