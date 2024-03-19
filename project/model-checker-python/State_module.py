@@ -54,12 +54,12 @@ class State():
         return res
 
     
-d = {}
-for i in range(5):
-    d[State(i)] = i
-
-for a, b in d.items():
-    print(a, b)
+# d = {}
+# for i in range(5):
+#     d[State(i)] = i
+#
+# for a, b in d.items():
+#     print(a, b)
 
 
 
