@@ -1,0 +1,110 @@
+<<
+[
+ _TEAction |-> [
+   position |-> 1,
+   name |-> "Initial predicate",
+   location |-> "Unknown location"
+ ],
+ intr0 |-> 0,
+ intr1 |-> 0,
+ pc0 |-> 0,
+ pc1 |-> 0,
+ turn |-> 0
+],
+[
+ _TEAction |-> [
+   position |-> 2,
+   name |-> "Next",
+   location |-> "line 191, col 10 to line 191, col 36 of module petersons_algo_modified"
+ ],
+ intr0 |-> 0,
+ intr1 |-> 0,
+ pc0 |-> 1,
+ pc1 |-> 0,
+ turn |-> 0
+],
+[
+ _TEAction |-> [
+   position |-> 3,
+   name |-> "Next",
+   location |-> "line 191, col 10 to line 191, col 36 of module petersons_algo_modified"
+ ],
+ intr0 |-> 0,
+ intr1 |-> 0,
+ pc0 |-> 2,
+ pc1 |-> 0,
+ turn |-> 0
+],
+[
+ _TEAction |-> [
+   position |-> 4,
+   name |-> "Next",
+   location |-> "line 191, col 10 to line 191, col 36 of module petersons_algo_modified"
+ ],
+ intr0 |-> 1,
+ intr1 |-> 0,
+ pc0 |-> 3,
+ pc1 |-> 0,
+ turn |-> 0
+],
+[
+ _TEAction |-> [
+   position |-> 5,
+   name |-> "Next",
+   location |-> "line 191, col 10 to line 191, col 36 of module petersons_algo_modified"
+ ],
+ intr0 |-> 1,
+ intr1 |-> 0,
+ pc0 |-> 4,
+ pc1 |-> 0,
+ turn |-> 1
+],
+[
+ _TEAction |-> [
+   position |-> 6,
+   name |-> "Next",
+   location |-> "line 191, col 43 to line 191, col 70 of module petersons_algo_modified"
+ ],
+ intr0 |-> 1,
+ intr1 |-> 0,
+ pc0 |-> 4,
+ pc1 |-> 1,
+ turn |-> 1
+],
+[
+ _TEAction |-> [
+   position |-> 7,
+   name |-> "Next",
+   location |-> "line 191, col 43 to line 191, col 70 of module petersons_algo_modified"
+ ],
+ intr0 |-> 1,
+ intr1 |-> 0,
+ pc0 |-> 4,
+ pc1 |-> 2,
+ turn |-> 1
+],
+[
+ _TEAction |-> [
+   position |-> 8,
+   name |-> "Next",
+   location |-> "line 191, col 43 to line 191, col 70 of module petersons_algo_modified"
+ ],
+ intr0 |-> 1,
+ intr1 |-> 1,
+ pc0 |-> 4,
+ pc1 |-> 3,
+ turn |-> 1
+],
+[
+ _TEAction |-> [
+   position |-> 9,
+   name |-> "Next",
+   location |-> "line 191, col 43 to line 191, col 70 of module petersons_algo_modified"
+ ],
+ intr0 |-> 1,
+ intr1 |-> 1,
+ pc0 |-> 4,
+ pc1 |-> 4,
+ turn |-> 0
+]
+>>
