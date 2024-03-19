@@ -1,2 +1,4 @@
 lab-files/*/*/*.toolbox
 practice/*/*.toolbox
+.*README*
+.DS*
