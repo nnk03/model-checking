@@ -3,3 +3,5 @@ practice/*/*.toolbox
 .*README*
 .DS*
 .project/
+.lab-files/
+.practice/
