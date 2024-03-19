@@ -8,6 +8,7 @@ from enum import Enum, auto
 class Operators(Enum):
     EF = auto()
     EX = auto()
+    EG = auto()
     EU = auto()
     AND = auto()
     OR = auto()
