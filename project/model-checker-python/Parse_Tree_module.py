@@ -30,9 +30,18 @@ class Parser():
         formula_representation = parse_formula(formula)
         return self.construct_parse_tree(formula_representation)
 
+    def return_parse_tree(self, formula):
+        formula_representation = parse_formula(formula)
+        tree = self.construct_parse_tree(formula_representation)
+        # resetting map before the next construction
+        self.map = {}
+        return tree
+
+
+
     def construct_parse_tree(self, formula : tuple | str | bool):
         if isinstance(formula, tuple):
-            # need to decide whether to use ENUM or STRING
+            # decided to use string instead of ENUM for formula
             # print(formula)
             if formula[0] == 'EG':
                 node = OperatorNode(
@@ -88,11 +97,11 @@ class Parser():
                     down = None
                 )
                 return node
-            elif formula[0] == 'IMPLIES':
-                # this, if necessary, will implement *******************************************
-                pass
+            # elif formula[0] == 'IMPLIES':
+            # IMPLIES was not necessary as it is already converted to 
+            # NOT p OR q in parser
             else:
-                raise Exception('Unknown Operator')
+                raise Exception(f'Unknown Operator {formula[0]}')
 
         elif isinstance(formula, bool):
             node = BooleanNode(formula)
@@ -104,8 +113,9 @@ class Parser():
                 return PropositionNode(self.map[prop_variable])
             else:
                 self.map[prop_variable] = self.track
+                prop_node = PropositionNode(self.track)
                 self.track += 1
-                return PropositionNode(self.track - 1)
+                return prop_node
 
     
     def inorder_traversal(self, node):

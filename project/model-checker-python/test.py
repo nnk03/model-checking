@@ -1,12 +1,17 @@
-from Parse_Tree_module import Parser
+# from Parse_Tree_module import Parser
+#
+# formula = input('Enter formula ')
+# parser = Parser()
+# parser.check_correctness(formula)
 
-formula = input('Enter formula ')
-parser = Parser()
-parser.check_correctness(formula)
+class A(dict):
+    def __init__(self):
+        super().__init__()
 
 
-
-
+a = A()
+a[3] = 4
+print(3 in a)
 
 
 

@@ -90,6 +90,34 @@ def p_formula_temporal_op(p):
                | EX formula
                | AF formula
                | EF formula'''
+    check = p[1]
+    formula = p[2]
+    result = (p[1], p[2])
+    if check == 'AG':
+        result = ('NOT', ('EU', True, ('NOT', formula)))
+        pass
+    elif check == 'EG':
+        # *****
+        result = ('EG', formula)
+        pass
+    elif check == 'AX':
+        # AX phi = NOT (EX (NOT phi))
+        result = ('NOT', ('EX', ('NOT', formula)))
+        pass
+    elif check == 'EX':
+        # *****
+        result = ('EX', formula)
+        pass
+    elif check == 'AF':
+        # AF phi = A [T U phi]
+        result = ('AU', True, formula)
+        pass
+    elif check == 'EF':
+        # EF phi = E [T U phi]
+        result = ('EU', True, formula)
+        pass
+
+    # p[0] = result
     p[0] = (p[1], p[2])
 
 def p_formula_bin_temporal_op(p):
@@ -98,7 +126,19 @@ def p_formula_bin_temporal_op(p):
             | A L_SQUARE formula U formula R_SQUARE
     '''
     if p[1] == 'A':
-        p[0] = ('AU', p[3], p[5])
+        # in terms of minimal set, we need to convert *************
+        # A [ a U b ] = NOT (E [(NOT b) U (NOT a AND NOT b)] OR (EG (NOT b)))
+        a = p[3]
+        b = p[5]
+        not_a = ('NOT', a)
+        not_b = ('NOT', b)
+        and_not_a_not_b = ('AND', not_a, not_b)
+        eu_not_b_and = ('EU', not_b, and_not_a_not_b)
+        eg_not_b = ('EG', not_b)
+        or_eu_eg = ('OR', eu_not_b_and, eg_not_b)
+        result = ('NOT', or_eu_eg)
+        # p[0] = ('AU', p[3], p[5])
+        p[0] = result
     else:
         p[0] = ('EU', p[3], p[5])
 
@@ -110,7 +150,11 @@ def p_formula_binop(p):
     '''formula : formula AND formula
                   | formula OR formula
                   | formula IMPLIES formula'''
-    p[0] = (p[2], p[1], p[3])
+    if p[2] == '->':
+        # converting implies to NOT p OR q
+        p[0] = ('OR', ('NOT', p[1]), p[3])
+    else:
+        p[0] = (p[2], p[1], p[3])
 
 def p_formula_not(p):
     'formula : NOT formula'

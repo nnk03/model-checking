@@ -8,7 +8,8 @@ from Closure_module import ClosureClass
 from State_module import State
 from Proposition_module import Proposition
 from Node_module import *
-from Parser_module import *
+# from Parser_module import *
+from Parse_Tree_module import Parser
 from Kripke_Structure_module import *
 
 
@@ -21,19 +22,18 @@ class ModelChecker():
         self.parser = Parser()
         assert(isinstance(kripke_structure, Kripke_Structure))
         self.kripke = kripke_structure
-        self.closure = None
+        self.closure = ClosureClass()
 
-    def check_model(self, formula : str):
+    def check_model(self, formula : str, state = None):
         assert(
             isinstance(formula, str)
         )
-        # assuming we have a parse tree
-
-        tree = self.parser.construct_parse_tree(formula)
+        tree = self.parser.return_parse_tree(formula)
         del self.closure
         self.closure = ClosureClass()
 
     def compute_closure(self, root : Node):
+        assert(isinstance(root, Node))
         if root.sub_tree_formula in self.closure:
             # if already computed, no need to compute it again
             return
@@ -44,6 +44,7 @@ class ModelChecker():
                 # set of all states
                 self.closure[root.sub_tree_formula] = self.kripke.states_set.copy()
             else:
+                # empty set
                 self.closure[root.sub_tree_formula] = set()
 
 
@@ -62,11 +63,14 @@ class ModelChecker():
 
         elif isinstance(root, OperatorNode):
 
-            if root.operator == Operators.AND:
+            if root.operator == 'AND':
                 satisfying_states = set()
                 left = root.left
                 right = root.right
                 assert(isinstance(left, Node) and isinstance(right, Node))
+                self.compute_closure(left)
+                self.compute_closure(right)
+
                 left_sub_tree_formula = left.sub_tree_formula
                 right_sub_tree_formula = right.sub_tree_formula
 
@@ -78,11 +82,13 @@ class ModelChecker():
                         satisfying_states.add(state)
                 self.closure[root.sub_tree_formula] = satisfying_states
 
-            elif root.operator == Operators.OR:
+            elif root.operator == 'OR':
                 satisfying_states = set()
                 left = root.left
                 right = root.right
                 assert(isinstance(left, Node) and isinstance(right, Node))
+                self.compute_closure(left)
+                self.compute_closure(right)
                 left_sub_tree_formula = left.sub_tree_formula
                 right_sub_tree_formula = right.sub_tree_formula
 
@@ -94,10 +100,11 @@ class ModelChecker():
                         satisfying_states.add(state)
                 self.closure[root.sub_tree_formula] = satisfying_states
 
-            elif root.operator == Operators.NOT:
+            elif root.operator == 'NOT':
                 satisfying_states = set()
                 down = root.down
                 assert(isinstance(down, Node))
+                self.compute_closure(down)
                 down_sub_tree_formula = down.sub_tree_formula
                 closure_down = down_sub_tree_formula
                 for state in self.kripke.states:
@@ -107,25 +114,27 @@ class ModelChecker():
 
                 self.closure[root.sub_tree_formula] = satisfying_states
 
-            elif root.operator == Operators.EX:
-                self.closure[root.sub_tree_formula] = self.compute_closure_EX(root)
+            elif root.operator == 'EX':
+                self.closure[root.sub_tree_formula] = self.return_closure_EX(root)
 
-            elif root.operator == Operators.EG:
-                self.closure[root.sub_tree_formula] = self.compute_closure_EG(root)
+            elif root.operator == 'EG':
+                self.closure[root.sub_tree_formula] = self.return_closure_EG(root)
 
-            elif root.operator == Operators.EF:
-                self.closure[root.sub_tree_formula] = self.compute_closure_EF(root)
+            elif root.operator == 'EU':
+                self.closure[root.sub_tree_formula] = self.return_closure_EU(root)
 
             else:
-                raise f'{root.operator} IS AN UNKNOWN OPERATOR'
+                raise Exception(f'{root.operator} IS AN UNKNOWN OPERATOR')
 
         else:
-            raise f'UNKNOWN NODE TYPE'
+            raise Exception(f'UNKNOWN NODE TYPE')
 
-    def compute_closure_EF(self) -> set:
+    def return_closure_EU(self, root) -> set:
+        assert(isinstance(root, OperatorNode))
         pass
 
-    def compute_closure_EX(self, root : OperatorNode) -> set:
+    def return_closure_EX(self, root : OperatorNode) -> set:
+        assert(isinstance(root, OperatorNode))
         satisfying_states = set()
         assert(isinstance(root, OperatorNode))
         sub_tree_formula = root.sub_tree_formula
@@ -141,7 +150,8 @@ class ModelChecker():
 
         return satisfying_states
 
-    def compute_closure_EG(self) -> set:
+    def return_closure_EG(self, root) -> set:
+        assert(isinstance(root, OperatorNode))
         pass
 
 
