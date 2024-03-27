@@ -45,7 +45,7 @@ t_ignore = ' \t'
 
 # Define a rule for variables
 def t_PROP_VARIABLE(t):
-    r'[a-z_][a-zA-Z]*'    # only allowing single letters as propositional variables
+    r'[a-z]'    # only allowing single letters as propositional variables
     return t
 
 
@@ -136,10 +136,10 @@ def parse_formula(formula):
     return parser.parse(formula)
 
 # Test the parser
-if __name__ == "__main__":
-    formula = input("Enter a propositional formula: ")
-    result = parse_formula(formula)
-    print("Parsed formula:", result)
+# if __name__ == "__main__":
+#     formula = input("Enter a propositional formula: ")
+#     result = parse_formula(formula)
+#     print("Parsed formula:", result)
     # lines = []
     # with open('./testcases', 'r') as file:
     #     lines = file.readlines()
@@ -149,7 +149,6 @@ if __name__ == "__main__":
     #     formula = str(formula)
     #     print('Parsed formula', parse_formula(formula))
     
-
 
 
 
