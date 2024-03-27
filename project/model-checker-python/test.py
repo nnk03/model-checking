@@ -1,12 +1,28 @@
-from enum import Enum, auto
+from Parse_Tree_module import Parser
 
-class Color(Enum):
-    RED = auto()
-    BLUE = auto()
-    DF = auto()
+formula = input('Enter formula ')
+parser = Parser()
+parser.check_correctness(formula)
 
-for color in Color:
-    print(color.name)
+
+
+
+
+
+
+
+
+
+
+# from enum import Enum, auto
+#
+# class Color(Enum):
+#     RED = auto()
+#     BLUE = auto()
+#     DF = auto()
+#
+# for color in Color:
+#     print(color.name)
 
 #
 #

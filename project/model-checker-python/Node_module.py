@@ -93,7 +93,7 @@ class BooleanNode(Node):
 
 class OperatorNode(Node):
     def __init__(self, 
-                 operator : str, 
+                 operator,
                  isTemporal : bool = False,
                  left = None,
                  right = None,
