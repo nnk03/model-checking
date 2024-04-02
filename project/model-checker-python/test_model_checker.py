@@ -3,7 +3,7 @@ from model_checker import ModelChecker
 
 
 
-k = Kripke_Structure(3, 2)
+k = Kripke_Structure(3, 2, ['p', 'q'], [0])
 
 s1 = k.states[0]
 s2 = k.states[1]
@@ -21,9 +21,11 @@ A = 0
 B = 1
 C = 2
 
-k.set_label_for_state_i(A, [P, Q])
-k.set_label_for_state_i(B, [Q])
-k.set_label_for_state_i(C, [P])
+k.set_prop_variables(['p', 'q'])
+
+k.set_label_for_state_i(A, ['p', 'q'])
+k.set_label_for_state_i(B, ['q'])
+k.set_label_for_state_i(C, ['p'])
 
 k.set_next_states_for_state_i(A, [B])
 k.set_next_states_for_state_i(B, [A, C])
@@ -33,7 +35,11 @@ print(k)
 
 m = ModelChecker(k)
 
-m.check_model('p')
+while True:
+    formula = input()
+    m.check_model(formula)
+    print()
+
 
 
 

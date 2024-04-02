@@ -17,7 +17,8 @@ class Node():
                  isBool : bool = False,
                  left = None,
                  right = None,
-                 down = None
+                 down = None,
+                 sub_tree_formula = None,
                  ):
         # self.value = value
         self.isBool = isBool
@@ -27,8 +28,7 @@ class Node():
         # left and right are for binary operators
         self.left = left
         self.right = right
-
-        self.sub_tree_formula = ''
+        self.sub_tree_formula = sub_tree_formula
 
         # down is for unary operators
         self.down = down
@@ -37,22 +37,13 @@ class Node():
     def isLeaf(self):
         return self.left == None and self.right == None and self.down == None
 
-
-# class StateNode(Node):
-#     def __init__(self, state_number : int):
-#         super().__init__()
-#         self.state = State(state_number)
-#
-#     def __hash__(self):
-#         return hash(self.state)
-
 class PropositionNode(Node):
-    def __init__(self, proposition_number):
-        super().__init__()
+    def __init__(self, proposition_number, sub_tree_formula):
+        super().__init__(sub_tree_formula = sub_tree_formula)
         self.proposition = Proposition(proposition_number)
         # self.formula = f'{{PROPOSITION {self.proposition.proposition_number}}}'
         self.formula = f'({self.proposition.proposition_number})'
-        self.sub_tree_formula = self.formula
+        # self.sub_tree_formula = self.formula
 
     def __hash__(self):
         return hash(self.proposition)
@@ -60,11 +51,11 @@ class PropositionNode(Node):
 
 
 class BooleanNode(Node):
-    def __init__(self, bool_value : bool):
-        super().__init__()
+    def __init__(self, bool_value : bool, sub_tree_formula):
+        super().__init__(sub_tree_formula = sub_tree_formula)
         self.bool_value = bool_value
-        self.formula = '(True)' if bool_value == True else '(False)'
-        self.sub_tree_formula = self.formula
+        # self.formula = '(True)' if bool_value == True else '(False)'
+        # self.sub_tree_formula = self.formula
 
     def __hash__(self):
         if self.bool_value == True:
@@ -75,10 +66,11 @@ class BooleanNode(Node):
 class OperatorNode(Node):
     def __init__(self, 
                  operator,
+                 sub_tree_formula,
                  isTemporal : bool = False,
                  left = None,
                  right = None,
-                 down = None
+                 down = None,
                  ):
         """
         operator node must have atleast one child
@@ -86,7 +78,7 @@ class OperatorNode(Node):
         else then unary, left and right both should be None
         """
         assert((down != None and left == None and right == None) or (left != None and right != None and down == None))
-        super().__init__()
+        super().__init__(sub_tree_formula = sub_tree_formula)
         self.operator = operator
         self.isTemporal = isTemporal
         self.down = down
@@ -94,11 +86,11 @@ class OperatorNode(Node):
         self.right = right
         self.formula = operator
 
-        if self.down != None:
-            self.sub_tree_formula = '(' + self.formula + ' ' + self.down.sub_tree_formula + ')'
-        elif self.left != None and self.right != None:
-            # first, let us not worry about EU
-            self.sub_tree_formula = '(' + self.left.sub_tree_formula + ' ' + self.formula + ' ' + self.right.sub_tree_formula + ')'
+        # if self.down != None:
+        #     self.sub_tree_formula = '(' + self.formula + ' ' + self.down.sub_tree_formula + ')'
+        # elif self.left != None and self.right != None:
+        #     # first, let us not worry about EU
+        #     self.sub_tree_formula = '(' + self.left.sub_tree_formula + ' ' + self.formula + ' ' + self.right.sub_tree_formula + ')'
 
     # assuming we don't need to hash this as of now, else hashing like((self.left, self.operator, self.right, self.down))
     # might lead to recursion ( a dfs of the nodes whenever we want to find the hash)

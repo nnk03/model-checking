@@ -20,7 +20,7 @@ class State():
             isinstance(labels, list)
             and
             all([
-                isinstance(element, Proposition) for element in labels
+                isinstance(element, int) for element in labels
             ])
         )
         self.labels = labels
@@ -49,9 +49,9 @@ class State():
         """
         return hash((STATE_HASH, self.state_number))
 
-    def __str__(self):
-        res = f'{{STATE {self.state_number}}}'
-        return res
+    # def __str__(self):
+    #     res = f'{{STATE {self.state_number}}}'
+    #     return res
 
     
 # d = {}

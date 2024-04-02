@@ -109,16 +109,16 @@ def p_formula_temporal_op(p):
         result = ('EX', formula)
         pass
     elif check == 'AF':
-        # AF phi = A [T U phi]
-        result = ('AU', True, formula)
+        # AF phi = NOT ( EG ( NOT phi ) )
+        result = ('NOT', ('EG', ('NOT', formula)))
         pass
     elif check == 'EF':
         # EF phi = E [T U phi]
         result = ('EU', True, formula)
         pass
 
-    # p[0] = result
-    p[0] = (p[1], p[2])
+    p[0] = result
+    # p[0] = (p[1], p[2])
 
 def p_formula_bin_temporal_op(p):
     '''
@@ -132,10 +132,10 @@ def p_formula_bin_temporal_op(p):
         b = p[5]
         not_a = ('NOT', a)
         not_b = ('NOT', b)
-        and_not_a_not_b = ('AND', not_a, not_b)
+        and_not_a_not_b = ('&', not_a, not_b)
         eu_not_b_and = ('EU', not_b, and_not_a_not_b)
         eg_not_b = ('EG', not_b)
-        or_eu_eg = ('OR', eu_not_b_and, eg_not_b)
+        or_eu_eg = ('|', eu_not_b_and, eg_not_b)
         result = ('NOT', or_eu_eg)
         # p[0] = ('AU', p[3], p[5])
         p[0] = result
@@ -152,7 +152,7 @@ def p_formula_binop(p):
                   | formula IMPLIES formula'''
     if p[2] == '->':
         # converting implies to NOT p OR q
-        p[0] = ('OR', ('NOT', p[1]), p[3])
+        p[0] = ('|', ('NOT', p[1]), p[3])
     else:
         p[0] = (p[2], p[1], p[3])
 

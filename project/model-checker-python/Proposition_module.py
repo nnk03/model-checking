@@ -17,9 +17,9 @@ class Proposition():
         """
         return hash((PROPOSITION_HASH, self.proposition_number))
     
-    def __str__(self):
-        res = f'{{PROPOSITION {self.proposition_number}}}'
-        return res
+    # def __str__(self):
+    #     res = f'{{PROPOSITION {self.proposition_number}}}'
+    #     return res
 
 
 

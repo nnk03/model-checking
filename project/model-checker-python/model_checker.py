@@ -24,24 +24,46 @@ class ModelChecker():
         self.kripke = kripke_structure
         self.closure = ClosureClass()
 
+    def inorder_traversal(self, root : Node):
+        if root == None:
+            return
+        self.inorder_traversal(root.left)
+        print(root.sub_tree_formula)
+        self.inorder_traversal(root.down)
+        self.inorder_traversal(root.right)
+
+
     def check_model(self, formula : str, state = None):
         assert(
             isinstance(formula, str)
         )
-        tree = self.parser.return_parse_tree(formula)
+        formula_representation = self.parser.parse(formula)
+        print(formula_representation)
+        # tree = self.parser.return_parse_tree(formula)
+        tree = self.kripke.construct_parse_tree(formula_representation)
+        # print(tree)
+        # print('TREE INORDER TRAVERSAL')
+        # self.inorder_traversal(tree)
         del self.closure
         self.closure = ClosureClass()
         self.compute_closure(tree)
-        print(formula)
+        satisfying_states = self.closure[tree.sub_tree_formula]
+        start_states_set = self.kripke.start_states_set
+        if state == None:
+            assert(isinstance(start_states_set, set))
+            if start_states_set.issubset(satisfying_states):
+                print('Formula Holds for all start states')
+            else:
+                print('Formula does not hold for all start states')
 
         ans = self.closure[tree.sub_tree_formula]
-        print(len(ans))
-        for state in ans:
-            assert(isinstance(state, State))
-            print(state.state_number)
+        print(ans)
 
     def compute_closure(self, root : Node):
         assert(isinstance(root, Node))
+        # print('IN COMPUTE CLOSURE')
+        # print(root.sub_tree_formula)
+        # print(type(root))
         if root.sub_tree_formula in self.closure:
             # if already computed, no need to compute it again
             return
@@ -50,7 +72,7 @@ class ModelChecker():
         if isinstance(root, BooleanNode):
             if root.bool_value == True:
                 # set of all states
-                self.closure[root.sub_tree_formula] = self.kripke.states_set.copy()
+                self.closure[root.sub_tree_formula] = self.kripke.copy_of_states_set()
             else:
                 # empty set
                 self.closure[root.sub_tree_formula] = set()
@@ -63,8 +85,13 @@ class ModelChecker():
             for state in self.kripke.states:
                 # if proposition is present in the labelling
                 # of the state, add the state
-                if proposition in state.label_set:
-                    satisfying_states.add(state)
+                if proposition.proposition_number in state.label_set:
+                    # print("HERE")
+                    satisfying_states.add(state.state_number)
+
+            # print('SATISFYING STATES OF')
+            # print(root.sub_tree_formula)
+            # print(satisfying_states)
 
             self.closure[root.sub_tree_formula] = satisfying_states
 
@@ -86,8 +113,8 @@ class ModelChecker():
                 closure_right = self.closure[right_sub_tree_formula]
                 for state in self.kripke.states:
                     # if a state is present in the closure of both left and right, add it 
-                    if state in closure_left and state in closure_right:
-                        satisfying_states.add(state)
+                    if state.state_number in closure_left and state.state_number in closure_right:
+                        satisfying_states.add(state.state_number)
                 self.closure[root.sub_tree_formula] = satisfying_states
 
             elif root.operator == 'OR':
@@ -104,8 +131,8 @@ class ModelChecker():
                 closure_right = self.closure[right_sub_tree_formula]
                 for state in self.kripke.states:
                     # if a state is present in the closure of both left and right, add it 
-                    if state in closure_left or state in closure_right:
-                        satisfying_states.add(state)
+                    if state.state_number in closure_left or state.state_number in closure_right:
+                        satisfying_states.add(state.state_number)
                 self.closure[root.sub_tree_formula] = satisfying_states
 
             elif root.operator == 'NOT':
@@ -114,11 +141,11 @@ class ModelChecker():
                 assert(isinstance(down, Node))
                 self.compute_closure(down)
                 down_sub_tree_formula = down.sub_tree_formula
-                closure_down = down_sub_tree_formula
+                closure_down = self.closure[down_sub_tree_formula]
                 for state in self.kripke.states:
                     # if state does not satisfying phi, then it satisfies NOT phi
-                    if state not in closure_down:
-                        satisfying_states.add(state)
+                    if state.state_number not in closure_down:
+                        satisfying_states.add(state.state_number)
 
                 self.closure[root.sub_tree_formula] = satisfying_states
 
@@ -157,8 +184,9 @@ class ModelChecker():
         for state in self.kripke.states:
             assert(isinstance(state, State))
             for neighbour in state.next_states:
-                if neighbour in closure_right:
-                    satisfying_states.add(neighbour)
+                assert(isinstance(neighbour, State))
+                if neighbour.state_number in closure_right:
+                    satisfying_states.add(neighbour.state_number)
 
         # now for the 'repeat until step'
         curr = satisfying_states
@@ -166,34 +194,31 @@ class ModelChecker():
             prev = curr.copy()
             for state in self.kripke.states:
                 assert(isinstance(state, State))
-                if state in closure_left:
+                if state.state_number in closure_left:
                     for neighbour in state.next_states:
-                        if neighbour in closure_right:
-                            curr.add(neighbour)
+                        assert(isinstance(neighbour, State))
+                        if neighbour.state_number in closure_right:
+                            curr.add(neighbour.state_number)
             if curr == prev:
                 break
 
         satisfying_states = curr
         return satisfying_states
 
-
-
-
-        pass
-
     def return_closure_EX(self, root : OperatorNode) -> set:
         assert(isinstance(root, OperatorNode))
         satisfying_states = set()
-        assert(isinstance(root, OperatorNode))
-        sub_tree_formula = root.sub_tree_formula
-        closure_sub_tree_formula = self.closure[sub_tree_formula]
+        assert(isinstance(root.down, Node))
+        self.compute_closure(root.down)
+        closure_down = self.closure[root.down.sub_tree_formula]
         for state in self.kripke.states:
             # if there exist a successor satisfying the sub_tree_formula, add it
             assert(isinstance(state, State))
             for neighbour in state.next_states:
                 # even if there is a self loop on this state, it is not a problem
-                if neighbour in closure_sub_tree_formula:
-                    satisfying_states.add(state)
+                assert(isinstance(neighbour, State))
+                if neighbour.state_number in closure_down:
+                    satisfying_states.add(state.state_number)
                     break
 
         return satisfying_states
@@ -209,30 +234,34 @@ class ModelChecker():
         down_sub_tree_formula = down.sub_tree_formula
 
         closure_down = self.closure[down_sub_tree_formula]
+        # print(closure_down)
 
         satisfying_states = set()
         # initially adding all states of kripke satisying 'a'
         for state in self.kripke.states:
-            if state in closure_down:
-                satisfying_states.add(state)
+            if state.state_number in closure_down:
+                satisfying_states.add(state.state_number)
 
         # now for the 'repeat until step'
         curr = satisfying_states
         while True:
             prev = curr.copy()
+            # print(curr)
             for state in self.kripke.states:
-                if state in curr:
+                if state.state_number in curr:
                     found = False
                     for neighbour in state.next_states:
-                        if neighbour in curr:
+                        assert(isinstance(neighbour, State))
+                        if neighbour.state_number in curr:
                             found = True
                             break
-                    if found == False and state in curr:
-                        curr.remove(state)
+                    if found == False and state.state_number in curr:
+                        curr.remove(state.state_number)
             if curr == prev:
                 break
 
         satisfying_states = curr
+        # print(satisfying_states)
         return satisfying_states
         pass
 
