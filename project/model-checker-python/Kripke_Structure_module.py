@@ -9,6 +9,8 @@ class Kripke_Structure():
         self.states = [State(i) for i in range(n)]
         self.states_set = set(self.states)
         self.propositional_variables = [Proposition(i) for i in range(m)]
+        self.start_states = None
+        self.start_states_set = None
 
         
     def set_label_for_state_i(self, i : int, label_numbers : list):
@@ -42,6 +44,26 @@ class Kripke_Structure():
             self.states[val] for val in neighbour_numbers
         ]
         self.states[i].set_next_states(neighbours)
+
+    def __str__(self):
+        result = f'The Kripke structure is\n'
+        for state in self.states:
+            result += f'{state.state_number} : '
+            for neighbour in state.next_states:
+                result += f'{neighbour.state_number} '
+            result += '\n'
+
+        result += 'Labels are \n'
+        for state in self.states:
+            result += f'{state.state_number} : '
+            for proposition in state.labels:
+                assert(isinstance(proposition, Proposition))
+                result += f'{proposition.proposition_number} '
+
+            result += '\n'
+
+        return result
+
 
         
 

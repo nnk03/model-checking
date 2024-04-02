@@ -31,6 +31,14 @@ class ModelChecker():
         tree = self.parser.return_parse_tree(formula)
         del self.closure
         self.closure = ClosureClass()
+        self.compute_closure(tree)
+        print(formula)
+
+        ans = self.closure[tree.sub_tree_formula]
+        print(len(ans))
+        for state in ans:
+            assert(isinstance(state, State))
+            print(state.state_number)
 
     def compute_closure(self, root : Node):
         assert(isinstance(root, Node))
@@ -131,6 +139,46 @@ class ModelChecker():
 
     def return_closure_EU(self, root) -> set:
         assert(isinstance(root, OperatorNode))
+        '''
+        E[a U b] = b OR (a AND EX ( E [a U B] ))
+        '''
+        left = root.left
+        right = root.right
+        assert(isinstance(left, Node) and isinstance(right, Node))
+        self.compute_closure(left)
+        self.compute_closure(right)
+        left_sub_tree_formula = left.sub_tree_formula
+        right_sub_tree_formula = right.sub_tree_formula
+
+        closure_left = self.closure[left_sub_tree_formula]
+        closure_right = self.closure[right_sub_tree_formula]
+        satisfying_states = set()
+        # initially adding all states satisfying b
+        for state in self.kripke.states:
+            assert(isinstance(state, State))
+            for neighbour in state.next_states:
+                if neighbour in closure_right:
+                    satisfying_states.add(neighbour)
+
+        # now for the 'repeat until step'
+        curr = satisfying_states
+        while True:
+            prev = curr.copy()
+            for state in self.kripke.states:
+                assert(isinstance(state, State))
+                if state in closure_left:
+                    for neighbour in state.next_states:
+                        if neighbour in closure_right:
+                            curr.add(neighbour)
+            if curr == prev:
+                break
+
+        satisfying_states = curr
+        return satisfying_states
+
+
+
+
         pass
 
     def return_closure_EX(self, root : OperatorNode) -> set:
@@ -152,6 +200,40 @@ class ModelChecker():
 
     def return_closure_EG(self, root) -> set:
         assert(isinstance(root, OperatorNode))
+        '''
+        EG a = a AND EX EG a
+        '''
+        down = root.down
+        assert(isinstance(down, Node))
+        self.compute_closure(down)
+        down_sub_tree_formula = down.sub_tree_formula
+
+        closure_down = self.closure[down_sub_tree_formula]
+
+        satisfying_states = set()
+        # initially adding all states of kripke satisying 'a'
+        for state in self.kripke.states:
+            if state in closure_down:
+                satisfying_states.add(state)
+
+        # now for the 'repeat until step'
+        curr = satisfying_states
+        while True:
+            prev = curr.copy()
+            for state in self.kripke.states:
+                if state in curr:
+                    found = False
+                    for neighbour in state.next_states:
+                        if neighbour in curr:
+                            found = True
+                            break
+                    if found == False and state in curr:
+                        curr.remove(state)
+            if curr == prev:
+                break
+
+        satisfying_states = curr
+        return satisfying_states
         pass
 
 
