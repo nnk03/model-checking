@@ -13,5 +13,6 @@ project/model-checker-python/parser/include/y.tab.h
 project/model-checker-python/parser/include/src/lex.yy.c
 project/model-checker-python/parser/include/src/y.tab.c
 project/model-checker-python/parser/include/bin/
+project/model-checker-python/.venv/
 
 
