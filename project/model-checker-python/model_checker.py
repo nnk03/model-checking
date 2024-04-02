@@ -167,7 +167,7 @@ class ModelChecker():
     def return_closure_EU(self, root) -> set:
         assert(isinstance(root, OperatorNode))
         '''
-        E[a U b] = b OR (a AND EX ( E [a U B] ))
+        E[a U b] = b OR (a AND EX ( E [a U b] ))
         '''
         left = root.left
         right = root.right
@@ -197,8 +197,8 @@ class ModelChecker():
                 if state.state_number in closure_left:
                     for neighbour in state.next_states:
                         assert(isinstance(neighbour, State))
-                        if neighbour.state_number in closure_right:
-                            curr.add(neighbour.state_number)
+                        if neighbour.state_number in prev:
+                            curr.add(state.state_number)
             if curr == prev:
                 break
 
@@ -248,14 +248,14 @@ class ModelChecker():
             prev = curr.copy()
             # print(curr)
             for state in self.kripke.states:
-                if state.state_number in curr:
+                if state.state_number in prev:
                     found = False
                     for neighbour in state.next_states:
                         assert(isinstance(neighbour, State))
-                        if neighbour.state_number in curr:
+                        if neighbour.state_number in prev:
                             found = True
                             break
-                    if found == False and state.state_number in curr:
+                    if found == False and state.state_number in prev:
                         curr.remove(state.state_number)
             if curr == prev:
                 break
