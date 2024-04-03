@@ -25,7 +25,7 @@ VAR
 	this_intr : 0..1;
 
 INIT
-	pc = 1;
+	pc = 1 &
 	this_intr = 0;
 
 TRANS
