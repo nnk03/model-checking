@@ -44,6 +44,7 @@ class Kripke_Structure():
                     down = self.construct_parse_tree(formula[1]),
                     sub_tree_formula = formula,
                 )
+                node.set_minimal_formula()
                 return node
             elif formula[0] == 'EX':
                 node = OperatorNode(
@@ -52,6 +53,7 @@ class Kripke_Structure():
                     down = self.construct_parse_tree(formula[1]),
                     sub_tree_formula = formula,
                 )
+                node.set_minimal_formula()
                 # print('NODE')
                 # print(node.sub_tree_formula)
                 return node
@@ -63,6 +65,7 @@ class Kripke_Structure():
                     right = self.construct_parse_tree(formula[2]),
                     sub_tree_formula = formula
                 )
+                node.set_minimal_formula()
                 return node
             elif formula[0] == 'NOT':
                 node = OperatorNode(
@@ -73,6 +76,7 @@ class Kripke_Structure():
                     down = self.construct_parse_tree(formula[1]),
                     sub_tree_formula = formula
                 )
+                node.set_minimal_formula()
                 return node
             elif formula[0] == '&':
                 node = OperatorNode(
@@ -83,6 +87,7 @@ class Kripke_Structure():
                     down = None,
                     sub_tree_formula = formula
                 )
+                node.set_minimal_formula()
                 return node
             elif formula[0] == '|':
                 node = OperatorNode(
@@ -93,6 +98,7 @@ class Kripke_Structure():
                     down = None,
                     sub_tree_formula = formula
                 )
+                node.set_minimal_formula()
                 return node
             # elif formula[0] == 'IMPLIES':
             # IMPLIES was not necessary as it is already converted to 
@@ -102,18 +108,15 @@ class Kripke_Structure():
 
         elif isinstance(formula, bool):
             node = BooleanNode(formula, sub_tree_formula = formula)
+            # setting the minimal formula as the boolean itself
+            node.set_minimal_formula(formula)
             return node
 
         elif isinstance(formula, str):
             prop_variable = formula
-            return PropositionNode(self.map_prop_variable_number[prop_variable], sub_tree_formula = formula)
-            if prop_variable in self.map:
-                return PropositionNode(self.map[prop_variable])
-            else:
-                self.map[prop_variable] = self.track
-                prop_node = PropositionNode(self.track)
-                self.track += 1
-                return prop_node
+            node = PropositionNode(self.map_prop_variable_number[prop_variable], sub_tree_formula = formula)
+            node.set_minimal_formula(formula)
+            return node
 
     def set_label_for_state_i(self, i : int, labels : list):
         # label_numbers is a list of numbers corresponding to the proposition

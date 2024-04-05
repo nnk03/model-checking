@@ -32,31 +32,82 @@ class ModelChecker():
         self.inorder_traversal(root.down)
         self.inorder_traversal(root.right)
 
+    def return_number_of_nodes(self, root : Node):
+        if root == None:
+            return 0
+        assert(isinstance(root, Node))
+        ans = 1
+        ans += self.return_number_of_nodes(root.down)
+        ans += self.return_number_of_nodes(root.left)
+        ans += self.return_number_of_nodes(root.right)
+        return ans
+
+    def print_node_id_and_subformula(self, root):
+        if root == None:
+            return
+        assert(isinstance(root, Node))
+        self.print_node_id_and_subformula(root.left)
+        self.print_node_id_and_subformula(root.down)
+        print(f'Node id is {id(root)} -----------  Subformula is : {root.minimal_formula}')
+        self.print_node_id_and_subformula(root.right)
+
+    def print_node_id_and_subset_of_states(self, root):
+        if root == None:
+            return
+        assert(isinstance(root, Node))
+        self.print_node_id_and_subset_of_states(root.left)
+        self.print_node_id_and_subset_of_states(root.down)
+        print(f'Node id is {id(root)} -----------  States satisfying are {self.closure[root.sub_tree_formula]}')
+        self.print_node_id_and_subset_of_states(root.right)
+
 
     def check_model(self, formula : str, state = None):
         assert(
             isinstance(formula, str)
         )
+        print('Minimal set chosen is EU EG EX')
+        print()
         formula_representation = self.parser.parse(formula)
         print(formula_representation)
+        print()
         # tree = self.parser.return_parse_tree(formula)
         tree = self.kripke.construct_parse_tree(formula_representation)
+        print('After converting using minimal set of operators : RESULTANT FORMULA is')
+        print(tree.minimal_formula)
+        print()
+        print(f'Number of nodes is {self.return_number_of_nodes(tree)}')
+        print()
+        print('Printing node id and subformula of the nodes in INORDER')
+        print()
+        self.print_node_id_and_subformula(tree)
+        print()
         # print(tree)
         # print('TREE INORDER TRAVERSAL')
         # self.inorder_traversal(tree)
         del self.closure
         self.closure = ClosureClass()
+
+        print()
+
+        # computes the states satisfying the top most formula
         self.compute_closure(tree)
+
+        print('Printing node id, and the subset of states that satisfy the subformula corresponding to the node id')
+        self.print_node_id_and_subset_of_states(tree)
+        print()
+
+
         satisfying_states = self.closure[tree.sub_tree_formula]
         start_states_set = self.kripke.start_states_set
-        if state == None:
-            assert(isinstance(start_states_set, set))
-            if start_states_set.issubset(satisfying_states):
-                print('Formula Holds for all start states')
-            else:
-                print('Formula does not hold for all start states')
+        assert(isinstance(start_states_set, set))
+        if start_states_set.issubset(satisfying_states):
+            print('Formula Holds for all start states')
+        else:
+            print('Formula does not hold for all start states')
 
         ans = self.closure[tree.sub_tree_formula]
+        print()
+        print(f'SET OF STATES SATISFYING THE GIVEN FORMULA : {formula}')
         print(ans)
 
     def compute_closure(self, root : Node):

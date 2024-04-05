@@ -32,6 +32,35 @@ class Node():
 
         # down is for unary operators
         self.down = down
+        self.minimal_formula = ''
+
+    def set_minimal_formula(self, formula = ''):
+        result = ''
+        if formula == '':
+            if self.down != None and isinstance(self.down, Node):
+                down_formula = str(self.down.minimal_formula)
+                result = '(' + self.operator + ' '
+                result += down_formula
+                result += ')'
+
+            elif self.left != None and self.right != None and isinstance(self.left, Node) and isinstance(self.right, Node):
+                if self.operator == 'EU' or self.operator == 'AU':
+                    left_formula = str(self.left.minimal_formula)
+                    right_formula = str(self.right.minimal_formula)
+                    result = f'({self.operator[0]} [' + left_formula + ' ' + 'U' + ' ' + right_formula + '] )'
+                else:
+                    left_formula = str(self.left.minimal_formula)
+                    right_formula = str(self.right.minimal_formula)
+                    result = '(' + left_formula + ' ' + self.operator + ' ' + right_formula + ')'
+
+            self.minimal_formula = result
+
+        else:
+            self.minimal_formula = formula
+
+
+
+
 
 
     def isLeaf(self):
