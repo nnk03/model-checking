@@ -16,4 +16,5 @@ project/model-checker-python/parser/include/bin/
 project/model-checker-python/.venv/
 project/model-checker-python/__pycache__/
 
+resources_gitignored
 
