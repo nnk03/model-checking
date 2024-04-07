@@ -42,6 +42,67 @@ Steps done
 
 To see the project in action, run [main.py](./main.py)
 
+## Syntax followed
+
+```
+formula : formula first_order_operator formula
+        | '!' formula
+        | '(' formula ')'
+        | unary_temporal_operator formula
+        | binary_temporal_formula
+        | prop_variable
+        | boolean
+        ;
+
+first_order_operator : '&'
+                    |  '|'
+                    |  '->'
+                    ;
+
+binary_temporal_formula : 'E' '[' formula 'U' formula ']'
+                        | 'A' '[' formula 'U' formula ']'
+                        ;
+
+unary_temporal_operator : 'AG'
+                        | 'EG'
+                        | 'AF'
+                        | 'EF'
+                        | 'AX'
+                        | 'EX'
+                        ;
+
+
+prop_variable : [a-z_][a-zA-Z_]*
+                ;
+
+boolean : 'T'
+        | 'F'
+        ;
+
+```
+
+## Precedence
+
+Topmost operator is least precedence and
+bottom most operator has the highest precedence
+
+```
+precedence = (
+    ('left', '|'),
+    ('left', '&'),
+    ('right', '!'),
+    ('right', '->'),
+    ('right', 'EX'),
+    ('right', 'AX'),
+    ('right', 'EF'),
+    ('right', 'AF'),
+    ('right', 'EG'),
+    ('right', 'AG'),
+    ('left', 'EU'),
+    ('right', 'AU')
+)
+```
+
 ## Test Case format
 
 < Number of states of Kripke structure>\
@@ -49,7 +110,7 @@ To see the project in action, run [main.py](./main.py)
 < Names of the propositional variables
 delimited by space
 (
-can be multicharactered, but should of the format `[_a-z][a-zA-Z]*`
+can be multicharactered, but should of the format `[a-z_][a-zA-Z_]*`
 )>\
 < Start states delimited by space (states are numbered from 0)>\
 < Next states of 0 >\
