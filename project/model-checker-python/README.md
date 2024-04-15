@@ -13,6 +13,28 @@ Run the below command, preferably in a virtual environment
 pip install -r requirements.txt
 ```
 
+or extract the zip file and go to the folder containing all the python files and run the following
+commands
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+To deactivate the environment, run the below command
+
+```
+deactivate
+```
+
+```
+Important assumption in this project
+
+Input is assumed to be a valid Kripke structure, i.e every state has outgoing transitions. Didn't add
+trap state because if trap state is added, then the labels to be assigned to the trap state would be ambigous.
+```
+
 [requirements.txt](./requirements.txt) is the file containing the required libraries of
 this project
 
