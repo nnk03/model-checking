@@ -234,10 +234,13 @@ class ModelChecker():
         # initially adding all states satisfying b
         for state in self.kripke.states:
             assert(isinstance(state, State))
-            for neighbour in state.next_states:
-                assert(isinstance(neighbour, State))
-                if neighbour.state_number in closure_right:
-                    satisfying_states.add(neighbour.state_number)
+            if state.state_number in closure_right:
+                satisfying_states.add(state.state_number)
+
+            # for neighbour in state.next_states:
+            #     assert(isinstance(neighbour, State))
+            #     if neighbour.state_number in closure_right:
+            #         satisfying_states.add(neighbour.state_number)
 
         # now for the 'repeat until step'
         curr = satisfying_states

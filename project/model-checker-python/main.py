@@ -7,38 +7,61 @@
 from Kripke_Structure_module import Kripke_Structure
 from model_checker import ModelChecker
 
+file_name = input('Enter file\n')
+with open(file_name, 'r') as file:
+    file_content = file.readlines()
+    for i in range(len(file_content)):
+        file_content[i] = file_content[i].replace('\n', '')
 
-n = int(input('Enter number of states\n'))
-m = int(input('Enter number of propositional variables\n'))
+    print(file_content)
 
-lst_prop_variables = input('Enter the propositional variables delimited by space\n').split()
+    
+    i = 0
+    n = int(file_content[i])  # number of states
+    # print(n)
+    i += 1
 
-start_states = list(map(int, input('Enter the start states delimited by space\n').split()))
+    m = int(file_content[i])  # number of prop variables
+    # print(m)
+    i += 1
 
-k = Kripke_Structure(n, m, lst_prop_variables, start_states)
+    lst_prop_variables = file_content[i].split()
+    # print(lst_prop_variables)
+    i += 1
 
-for i in range(n):
-    print(f'Enter the next states of state {i} delimited by space')
-    neighbours = list(map(int, input().split()))
-    k.set_next_states_for_state_i(i, neighbours)
+    start_states = list(map(int, file_content[i].split()))
+    # print(start_states)
+    i += 1
 
-for i in range(n):
-    print(f'Enter the labels for state {i} delimited by space (DON\'T PUT THE NEGATIONS OF PROPOSITIONAL VARIABLES)')
-    labels = list(input().split())
-    k.set_label_for_state_i(i, labels)
+    k = Kripke_Structure(n, m, lst_prop_variables, start_states)
 
-print(k)
+    for state_num in range(n):
+        # next states
+        neighbours = list(map(int, file_content[i].split()))
+        k.set_next_states_for_state_i(state_num, neighbours)
+        i += 1
 
-m = ModelChecker(k)
-print()
+    for state_num in range(n):
+        # labels of states
+        labels = list(file_content[i].split())
+        k.set_label_for_state_i(state_num, labels)
+        i += 1
 
-while True:
-    try:
-        formula = input()
-        m.check_model(formula)
+    print(k)
+    m = ModelChecker(k)
+    print()
+
+    for j in range(i, len(file_content)):
+        formula = file_content[j]
+        formula = formula.strip()
+        if formula != '':
+            m.check_model(formula)
+            print('*' * 100)
         print()
-    except EOFError:
-        break
+
+
+
+
 
 
 

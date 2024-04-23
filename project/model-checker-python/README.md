@@ -62,7 +62,12 @@ Steps done
         and the subset of states of K that satisfy the subformula corresponding to that node.
 ```
 
-To see the project in action, run [main.py](./main.py)
+# Run the project
+
+If input is in a file, then run [main.py](./main.py)
+else run [main2.py](./main2.py)
+
+The format of the testcase is mentioned last
 
 ## Syntax followed
 
